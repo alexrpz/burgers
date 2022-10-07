@@ -5,8 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Tipo_Productos
-{
+class Tipo_producto extends Model{
 
 	protected $table = 'tipo_productos';
 	public $timestamps = false;

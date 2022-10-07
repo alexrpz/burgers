@@ -5,7 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Estados{
+class Estado extends Model{
 
 	protected $table = 'estados';
     public $timestamps = false;

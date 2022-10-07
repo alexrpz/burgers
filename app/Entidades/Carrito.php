@@ -5,7 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Carritos{
+class Carrito extends Model{
 
 	protected $table = 'carritos';
     public $timestamps = false;
@@ -55,8 +55,8 @@ class Carritos{
 
 	public function guardar() {
         $sql = "UPDATE carritos SET
-            fk_idcliente='$this->fk_idcliente',
-            fk_idproducto='$this->fk_idproducto'
+            fk_idcliente=$this->fk_idcliente,
+            fk_idproducto=$this->fk_idproducto
             WHERE idcarrito=?";
         $affected = DB::update($sql, [$this->idcarrito]);
     }

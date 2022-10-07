@@ -5,7 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Pedidos{
+class Pedido extends Model{
 
       protected $table = 'pedidos';
     public $timestamps = false;
@@ -67,11 +67,11 @@ class Pedidos{
 
 	public function guardar() {
         $sql = "UPDATE pedidos SET
-            total='$this->total',
-            fecha='$this->fecha',
-            fk_idcliente='$this->fk_idcliente',
-            fk_idestado='$this->fk_idestado',
-            fk_idsucursal='$this->fk_idsucursal'
+            total=$this->total,
+            fecha=$this->fecha,
+            fk_idcliente=$this->fk_idcliente,
+            fk_idestado=$this->fk_idestado,
+            fk_idsucursal=$this->fk_idsucursal
             WHERE idpedido=?";
         $affected = DB::update($sql, [$this->idpedido]);
     }

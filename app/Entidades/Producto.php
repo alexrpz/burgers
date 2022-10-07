@@ -5,7 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Productos{
+class Producto extends Model{
 
 	protected $table = 'productos';
     public $timestamps = false;
@@ -73,10 +73,10 @@ class Productos{
         $sql = "UPDATE productos SET
             titulo='$this->titulo',
             descripcion='$this->descripcion',
-            precio='$this->precio',
-            cantidad='$this->cantidad',
-            imagen=$this->imagen,
-            fk_idtipoproducto='$this->fk_idtipoproducto'
+            precio=$this->precio,
+            cantidad=$this->cantidad,
+            imagen='$this->imagen',
+            fk_idtipoproducto=$this->fk_idtipoproducto
             WHERE idproducto=?";
         $affected = DB::update($sql, [$this->idproducto]);
     }

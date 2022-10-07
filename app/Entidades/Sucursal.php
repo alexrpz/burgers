@@ -5,8 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Sucursales
-{
+class Sucursal extends Model{
 
 	protected $table = 'sucursales';
 	public $timestamps = false;
@@ -66,7 +65,7 @@ class Sucursales
 		$sql = "UPDATE sucursales SET
             nombre='$this->nombre',
             direccion='$this->direccion',
-            telefono='$this->telefono',
+            telefono=$this->telefono,
             link='$this->link',
             WHERE idsucursales=?";
 		$affected = DB::update($sql, [$this->idsucursales]);
@@ -74,8 +73,7 @@ class Sucursales
 
 	public function eliminar()
 	{
-		$sql = "DELETE FROM sucursales WHERE
-            idsucursales=?";
+		$sql = "DELETE FROM sucursales WHERE idsucursales=?";
 		$affected = DB::delete($sql, [$this->idsucursales]);
 	}
 
