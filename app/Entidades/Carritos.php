@@ -20,88 +20,64 @@ class Carritos{
 
 	public function cargarDesdeRequest($request) {
         $this->idcarrito = $request->input('id') != "0" ? $request->input('id') : $this->idcarrito;
-        $this->fk_idcliente = $request->input('fk_idcliente');
-        $this->fk_idproducto = $request->input('fk_idproducto');
+        $this->fk_idcliente = $request->input('lstCliente');
+        $this->fk_idproducto = $request->input('lstProducto');
     }
 
 	public function obtenerTodos()
     {
         $sql = "SELECT
-				idcliente,
-				nombre,
-				apellido,
-				telefono,
-				correo, 
-				dni, 
-				clave              
-                FROM clientes A ORDER BY nombre ASC";
+				idcarrito,
+                fk_idcliente, 
+				fk_idproducto              
+                FROM carritos A ORDER BY nombre ASC";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
 
-	public function obtenerPorId($idCliente)
+	public function obtenerPorId($idCarrito)
     {
         $sql = "SELECT
-                idcliente,
-				nombre,
-				apellido,
-				telefono,
-				correo, 
-				dni, 
-				clave 
-                FROM clientes WHERE idcliente = $idCliente";
+                idcarrito,
+				fk_idproducto,
+				fk_idcliente 
+                FROM carritos WHERE idcarrito = $idCarrito";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
-            $this->idmenu = $lstRetorno[0]->idcliente;
-            $this->nombre = $lstRetorno[0]->nombre;
-            $this->apellido = $lstRetorno[0]->apellido;
-            $this->telefono = $lstRetorno[0]->telefono;
-            $this->correo = $lstRetorno[0]->correo;
-            $this->dni = $lstRetorno[0]->dni;
-            $this->clave = $lstRetorno[0]->clave;
+            $this->idcarrito = $lstRetorno[0]->idcarrito;
+            $this->fk_idproducto = $lstRetorno[0]->fk_idproducto;
+            $this->fk_idcliente = $lstRetorno[0]->fk_idcliente;
             return $this;
         }
         return null;
     }
 
 	public function guardar() {
-        $sql = "UPDATE clientes SET
-            nombre='$this->nombre',
-            apellido='$this->apellido',
-            telefono='$this->telefono',
-            correo='$this->correo',
-            dni='$this->dni',
-            clave='$this->clave'
-            WHERE idcliente=?";
-        $affected = DB::update($sql, [$this->idcliente]);
+        $sql = "UPDATE carritos SET
+            fk_idcliente='$this->fk_idcliente',
+            fk_idproducto='$this->fk_idproducto'
+            WHERE idcarrito=?";
+        $affected = DB::update($sql, [$this->idcarrito]);
     }
 
     public function eliminar()
     {
-        $sql = "DELETE FROM clientes WHERE
-            idcliente=?";
-        $affected = DB::delete($sql, [$this->idcliente]);
+        $sql = "DELETE FROM carritos WHERE
+            idcarrito=?";
+        $affected = DB::delete($sql, [$this->idcarrito]);
     }
 
 	public function insertar()
     {
-        $sql = "INSERT INTO clientes (
-                nombre,
-                apellido,
-                telefono,
-                correo,
-                dni,
-                clave
-            ) VALUES (?, ?, ?, ?, ?, ?);";
+        $sql = "INSERT INTO carritos (
+                fk_idproducto,
+				fk_idcliente 
+            ) VALUES (?, ?);";
         $result = DB::insert($sql, [
-            $this->nombre,
-            $this->apellido,
-            $this->telefono,
-            $this->correo,
-            $this->dni,
-            $this->clave,
+            $this->fk_idcliente,
+            $this->fk_idproducto,
         ]);
-        return $this->idcliente = DB::getPdo()->lastInsertId();
+        return $this->idcarrito = DB::getPdo()->lastInsertId();
     }
 }

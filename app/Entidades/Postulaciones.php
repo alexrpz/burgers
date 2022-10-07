@@ -5,13 +5,13 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Clientes{
+class Postulaciones{
 
-	protected $table = 'clientes';
+	protected $table = 'postulaciones';
     public $timestamps = false;
 
     protected $fillable = [
-        'idcliente', 'nombre', 'apellido', 'telefono', 'correo', 'dni', 'clave',
+        'idpostulacion', 'nombre', 'apellido', 'telefono', 'correo',
     ];
 
     protected $hidden = [
@@ -19,94 +19,79 @@ class Clientes{
     ];
 
 	public function cargarDesdeRequest($request) {
-        $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+        $this->idpostulacion = $request->input('id') != "0" ? $request->input('id') : $this->idpostulacion;
         $this->nombre = $request->input('txtNombre');
         $this->apellido = $request->input('txtApellido');
         $this->telefono = $request->input('txtTelefono');
         $this->correo = $request->input('lstCorreo');
-        $this->dni = $request->input('txtDni');
-        $this->clave = $request->input('txtClave');
     }
 
 	public function obtenerTodos()
     {
         $sql = "SELECT
-				idcliente,
+				idpostulacion,
 				nombre,
 				apellido,
 				telefono,
-				correo, 
-				dni, 
-				clave              
-                FROM clientes A ORDER BY nombre ASC";
+				correo             
+                FROM postulaciones A ORDER BY nombre ASC";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
 
-	public function obtenerPorId($idCliente)
+	public function obtenerPorId($idPostulacion)
     {
         $sql = "SELECT
-                idcliente,
+                idpostulacion,
 				nombre,
 				apellido,
 				telefono,
-				correo, 
-				dni, 
-				clave 
-                FROM clientes WHERE idcliente = $idCliente";
+				correo
+                FROM postulaciones WHERE idpostulacion = $idPostulacion";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
-            $this->idcliente = $lstRetorno[0]->idcliente;
+            $this->idpostulacion = $lstRetorno[0]->idpostulacion;
             $this->nombre = $lstRetorno[0]->nombre;
             $this->apellido = $lstRetorno[0]->apellido;
             $this->telefono = $lstRetorno[0]->telefono;
             $this->correo = $lstRetorno[0]->correo;
-            $this->dni = $lstRetorno[0]->dni;
-            $this->clave = $lstRetorno[0]->clave;
             return $this;
         }
         return null;
     }
 
 	public function guardar() {
-        $sql = "UPDATE clientes SET
+        $sql = "UPDATE postulaciones SET
             nombre='$this->nombre',
             apellido='$this->apellido',
             telefono='$this->telefono',
             correo='$this->correo',
-            dni='$this->dni',
-            clave='$this->clave'
-            WHERE idcliente=?";
-        $affected = DB::update($sql, [$this->idcliente]);
+            WHERE idpostulacion=?";
+        $affected = DB::update($sql, [$this->idpostulacion]);
     }
 
     public function eliminar()
     {
-        $sql = "DELETE FROM clientes WHERE
-            idcliente=?";
-        $affected = DB::delete($sql, [$this->idcliente]);
+        $sql = "DELETE FROM postulaciones WHERE
+            idpostulacion=?";
+        $affected = DB::delete($sql, [$this->idpostulacion]);
     }
 
 	public function insertar()
     {
-        $sql = "INSERT INTO clientes (
+        $sql = "INSERT INTO postulaciones (
                 nombre,
                 apellido,
                 telefono,
-                correo,
-                dni,
-                clave
-            ) VALUES (?, ?, ?, ?, ?, ?);";
+                correo
+            ) VALUES (?, ?, ?, ?);";
         $result = DB::insert($sql, [
             $this->nombre,
             $this->apellido,
             $this->telefono,
             $this->correo,
-            $this->dni,
-            $this->clave,
         ]);
-        return $this->idcliente = DB::getPdo()->lastInsertId();
+        return $this->idpostulacion = DB::getPdo()->lastInsertId();
     }
 }
-?>
