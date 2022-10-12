@@ -1,5 +1,5 @@
 @extends("plantilla")
-@section('titulo', "Nuevo producto")
+@section('Nombre', "Nuevo producto")
 @section('scripts')
 <script>
       globalId = '<?php echo isset($producto->idproducto) && $producto->idproducto > 0 ? $producto->idproducto : 0; ?>';
@@ -46,12 +46,12 @@ if (isset($msg)) {
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
-                        <label>Título: *</label>
-                        <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" value="" required>
+                        <label>Nombre: *</label>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Descripción: *</label>
-                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="" required>
+                        <textarea name="txtDescripcion" id="txtDescripcion" cols="30" rows="10" class="form-control"></textarea>
                   </div>
             </div>
             <div class="row">
