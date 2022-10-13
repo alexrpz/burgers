@@ -70,7 +70,7 @@ class Cliente extends Model{
             nombre='$this->nombre',
             telefono='$this->telefono',
             correo='$this->correo',
-            dni='$this->dni',
+            dni= '$this->dni',
             clave='$this->clave'
             WHERE idcliente=?";
         $affected = DB::update($sql, [$this->idcliente]);
@@ -106,17 +106,18 @@ class Cliente extends Model{
         $request = $_REQUEST;
         $columns = array(
             0 => 'nombre',
-            1 => 'dni',
+            1 => 'telefono',
             2 => 'correo',
-            3 => 'telefono',
+            3 => 'dni',
+            4 => 'clave',
         );
         $sql = "SELECT DISTINCT
                     idcliente,
                     nombre,
-                    dni,
+                    telefono,
                     correo,
-                    telefono
-
+                    dni,
+                    clave
                     FROM clientes
                 WHERE 1=1
                 ";
@@ -127,6 +128,7 @@ class Cliente extends Model{
             $sql .= " OR correo LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR dni LIKE '%" . $request['search']['value'] . "%' )";
             $sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR clave LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
 
