@@ -11,7 +11,7 @@ class Postulacion extends Model{
     public $timestamps = false;
 
     protected $fillable = [
-        'idpostulacion', 'nombre', 'apellido', 'telefono', 'correo',
+        'idpostulacion', 'nombre', 'apellido', 'telefono', 'correo', 'link',
     ];
 
     protected $hidden = [
@@ -24,6 +24,7 @@ class Postulacion extends Model{
         $this->apellido = $request->input('txtApellido');
         $this->telefono = $request->input('txtTelefono');
         $this->correo = $request->input('lstCorreo');
+        $this->link = $request->input('txtLink');
     }
 
 	public function obtenerTodos()
@@ -33,7 +34,8 @@ class Postulacion extends Model{
 				nombre,
 				apellido,
 				telefono,
-				correo             
+				correo,
+                link            
                 FROM postulaciones A ORDER BY nombre ASC";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
@@ -46,7 +48,8 @@ class Postulacion extends Model{
 				nombre,
 				apellido,
 				telefono,
-				correo
+				correo,
+                link
                 FROM postulaciones WHERE idpostulacion = $idPostulacion";
         $lstRetorno = DB::select($sql);
 
@@ -56,6 +59,7 @@ class Postulacion extends Model{
             $this->apellido = $lstRetorno[0]->apellido;
             $this->telefono = $lstRetorno[0]->telefono;
             $this->correo = $lstRetorno[0]->correo;
+            $this->link = $lstRetorno[0]->link;
             return $this;
         }
         return null;
@@ -67,6 +71,7 @@ class Postulacion extends Model{
             apellido='$this->apellido',
             telefono=$this->telefono,
             correo='$this->correo',
+            link='$this->link',
             WHERE idpostulacion=?";
         $affected = DB::update($sql, [$this->idpostulacion]);
     }
@@ -84,14 +89,51 @@ class Postulacion extends Model{
                 nombre,
                 apellido,
                 telefono,
-                correo
-            ) VALUES (?, ?, ?, ?);";
+                correo,
+                link
+            ) VALUES (?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
             $this->nombre,
             $this->apellido,
             $this->telefono,
             $this->correo,
+            $this->link,
         ]);
         return $this->idpostulacion = DB::getPdo()->lastInsertId();
+    }
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'nombre',
+            1 => 'apellido',
+            2 => 'telefono',
+            3 => 'correo',
+            4 => 'link',
+        );
+        $sql = "SELECT DISTINCT
+                idpostulacion,
+                nombre,
+                apellido,
+                telefono,
+                correo,
+                link
+                    FROM postulaciones
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR apellido LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR correo LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR link LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
     }
 }

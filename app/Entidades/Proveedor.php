@@ -93,4 +93,36 @@ class Proveedor extends Model{
 		]);
 		return $this->idproveedor = DB::getPdo()->lastInsertId();
 	}
+	public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'nombre',
+            1 => 'domicilio',
+            2 => 'cuit',
+            3 => 'fk_idrubro',
+        );
+        $sql = "SELECT DISTINCT
+                idproveedor,
+                nombre,
+                domicilio,
+                cuit,
+                fk_idrubro
+                    FROM proveedores
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR domicilio LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR cuit LIKE '%" . $request['search']['value'] . "%' )";
+		$sql .= " OR fk_idrubro LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }

@@ -11,6 +11,11 @@ class ControladorCliente extends Controller{
 			$titulo= "Nuevo cliente";
             return view('sistema.cliente-nuevo', compact('titulo'));
       }
+	public function index(){
+		$titulo= "Listado de clientes";
+		return view("sistema.cliente-listar", compact("titulo"));
+	}
+	 
       public function guardar(Request $request){
 			try {
 				//Define la entidad servicio
@@ -19,7 +24,7 @@ class ControladorCliente extends Controller{
 				$entidad->cargarDesdeRequest($request);
 	
 				//validaciones
-				if ($entidad->nombre == "" || $entidad->telefono == "" || $entidad->correo == "" || $entidad->clave == "") {
+				if ($entidad->nombre == "" || $entidad->dni== "" || $entidad->telefono == "" || $entidad->correo == "" || $entidad->clave == "") {
 					$msg["ESTADO"] = MSG_ERROR;
 					$msg["MSG"] = "Complete todos los datos";
 				} else {
@@ -49,4 +54,38 @@ class ControladorCliente extends Controller{
 			$cliente->obtenerPorId($id);
 			return view('sistema.cliente-nuevo', compact('msg', 'cliente', 'titulo')) . '?id=' . $cliente->idcliente;
       }
+	public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Cliente();
+        $aClientes = $entidad->obtenerFiltrado();
+
+        $data = array();
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+
+        for ($i = $inicio; $i < count($aClientes) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = '<a href="/admin/sistema/clientes/' . $aClientes[$i]->idClientes . '">' . $aClientes[$i]->nombre . '</a>';
+            $row[] = "<a href='/admin/cliente/" . $aClientes[$i]->nombre . "'>" . $aClientes[$i]->nombre . "</a>";
+            $row[] = $aClientes[$i]->correo;
+            $row[] = $aClientes[$i]->telefono;
+		$row[] = $aClientes[$i]->dni;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aClientes), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aClientes), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
+    }
+
 }

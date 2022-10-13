@@ -101,5 +101,38 @@ class Cliente extends Model{
         ]);
         return $this->idcliente = DB::getPdo()->lastInsertId();
     }
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'nombre',
+            1 => 'dni',
+            2 => 'correo',
+            3 => 'telefono',
+        );
+        $sql = "SELECT DISTINCT
+                    idcliente,
+                    nombre,
+                    dni,
+                    correo,
+                    telefono
+
+                    FROM clientes
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR correo LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR dni LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }
 ?>

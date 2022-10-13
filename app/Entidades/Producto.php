@@ -11,7 +11,7 @@ class Producto extends Model{
     public $timestamps = false;
 
     protected $fillable = [
-        'idproducto', 'titulo', 'descripcion', 'precio', 'cantidad', 'imagen', 'fk_idtipoproducto',
+        'idproducto', 'nombre', 'descripcion', 'precio', 'cantidad', 'imagen', 'fk_idtipoproducto',
     ];
 
     protected $hidden = [
@@ -20,7 +20,7 @@ class Producto extends Model{
 
 	public function cargarDesdeRequest($request) {
         $this->idproducto = $request->input('id') != "0" ? $request->input('id') : $this->idproducto;
-        $this->titulo = $request->input('txtTitulo');
+        $this->nombre = $request->input('txtNombre');
         $this->descripcion = $request->input('txtDescripcion');
         $this->precio = $request->input('txtPrecio');
         $this->cantidad = $request->input('txtCantidad');
@@ -32,13 +32,13 @@ class Producto extends Model{
     {
         $sql = "SELECT
 				idproducto,
-				titulo,
+				nombre,
 				descripcion,
 				precio,
 				cantidad, 
 				imagen, 
 				fk_idtipoproducto              
-                FROM productos A ORDER BY titulo ASC";
+                FROM productos A ORDER BY nombre ASC";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
@@ -47,7 +47,7 @@ class Producto extends Model{
     {
         $sql = "SELECT
                 idproducto,
-				titulo,
+				nombre,
 				descripcion,
 				precio,
 				cantidad, 
@@ -58,7 +58,7 @@ class Producto extends Model{
 
         if (count($lstRetorno) > 0) {
             $this->idproducto = $lstRetorno[0]->idproducto;
-            $this->titulo = $lstRetorno[0]->titulo;
+            $this->nombre = $lstRetorno[0]->nombre;
             $this->descripcion = $lstRetorno[0]->descripcion;
             $this->precio = $lstRetorno[0]->precio;
             $this->cantidad = $lstRetorno[0]->cantidad;
@@ -71,7 +71,7 @@ class Producto extends Model{
 
 	public function guardar() {
         $sql = "UPDATE productos SET
-            titulo='$this->titulo',
+            nombre='$this->nombre',
             descripcion='$this->descripcion',
             precio=$this->precio,
             cantidad=$this->cantidad,
@@ -91,7 +91,7 @@ class Producto extends Model{
 	public function insertar()
     {
         $sql = "INSERT INTO productos (
-                titulo,
+                nombre,
                 descripcion,
                 precio,
                 cantidad,
@@ -99,7 +99,7 @@ class Producto extends Model{
                 fk_idtipoproducto
             ) VALUES (?, ?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
-            $this->titulo,
+            $this->nombre,
             $this->descripcion,
             $this->precio,
             $this->cantidad,
@@ -107,5 +107,43 @@ class Producto extends Model{
             $this->fk_idtipoproducto,
         ]);
         return $this->idproducto = DB::getPdo()->lastInsertId();
+    }
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'nombre',
+            1 => 'descripcion',
+            2 => 'precio',
+            3 => 'cantidad',
+            4 => 'imagen',
+            5 => 'fk_idtipoproducto',
+        );
+        $sql = "SELECT DISTINCT
+                idproducto,
+                nombre,
+                descripcion,
+                precio,
+                cantidad,
+                imagen,
+                fk_idtipoproducto
+                    FROM productos
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR descripcion LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR precio LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR cantidad LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR imagen LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR fk_idtipoproducto LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
     }
 }

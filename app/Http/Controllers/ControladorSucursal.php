@@ -46,7 +46,41 @@ class ControladorSucursal extends Controller{
             $sucursal = new Sucursal();
             $sucursal->obtenerPorId($id);
             return view('sistema.sucursal-nuevo', compact('msg', 'sucursal', 'titulo')) . '?id=' . $sucursal->idsucursal;
-}
+      }
+      public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Sucursal();
+        $aSucursales = $entidad->obtenerFiltrado();
+
+        $data = array();
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+
+        for ($i = $inicio; $i < count($aSucursales) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = '<a href="/admin/sistema/Sucursales/' . $aSucursales[$i]->idSucursales . '">' . $aSucursales[$i]->nombre . '</a>';
+            $row[] = "<a href='/admin/Sucursal/" . $aSucursales[$i]->nombre . "'>" . $aSucursales[$i]->nombre . "</a>";
+            $row[] = $aSucursales[$i]->direccion;
+		$row[] = $aSucursales[$i]->telefono;
+		$row[] = $aSucursales[$i]->link;
+		$row[] = $aSucursales[$i]->horario;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aSucursales), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aSucursales), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
+    }
 
 }
 ?>

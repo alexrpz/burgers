@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Entidades\Pedido;
 use App\Entidades\Estado;
-use App\Entidades\Cliente;
+use App\Entidades\Pedido;
 require app_path() . '/start/constants.php';
 class ControladorPedido extends Controller{
       public function nuevo()
@@ -11,11 +11,14 @@ class ControladorPedido extends Controller{
 			$titulo= "Nuevo pedido";
             $estado= new Estado();
 			$aEstados= $estado->obtenerTodos();
-			$cliente= new Cliente();
-			$aClientes= $cliente->obtenerTodos();
-            return view("sistema.pedido-nuevo",compact("titulo", "aEstados", "aClientes"));
+			$Pedido= new Pedido();
+			$aPedidos= $Pedido->obtenerTodos();
+            return view("sistema.pedido-nuevo",compact("titulo", "aEstados", "aPedidos"));
       }
-      
+      public function index(){
+		$titulo= "Listado de pedidos";
+		return view("sistema.pedido-listar", compact("titulo"));
+	}
       public function guardar(Request $request){
 			try {
 				//Define la entidad servicio
@@ -24,7 +27,7 @@ class ControladorPedido extends Controller{
 				$entidad->cargarDesdeRequest($request);
 	
 				//validaciones
-				if ($entidad->total == "" || $entidad->fecha == "" || $entidad->fk_idcliente == "" || $entidad->fk_idestado == "" || $entidad->fk_idsucursal == "" ) {
+				if ($entidad->total == "" || $entidad->fecha == "" || $entidad->fk_idPedido == "" || $entidad->fk_idestado == "" || $entidad->fk_idsucursal == "" ) {
 					$msg["ESTADO"] = MSG_ERROR;
 					$msg["MSG"] = "Complete todos los datos";
 				} else {
@@ -54,6 +57,41 @@ class ControladorPedido extends Controller{
 			$pedido->obtenerPorId($id);
 			return view('sistema.pedido-nuevo', compact('msg', 'pedido', 'titulo')) . '?id=' . $pedido->idpedido;
       }
+	public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Pedido();
+        $aPedidos = $entidad->obtenerFiltrado();
+
+        $data = array();
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+
+        for ($i = $inicio; $i < count($aPedidos) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = '<a href="/admin/sistema/pedidos/' . $aPedidos[$i]->idPedidos . '">' . $aPedidos[$i]->idpedido . '</a>';
+            $row[] = "<a href='/admin/pedido/" . $aPedidos[$i]->idpedido . "'>" . $aPedidos[$i]->idpedido . "</a>";
+            $row[] = $aPedidos[$i]->total;
+            $row[] = $aPedidos[$i]->fecha;
+		$row[] = $aPedidos[$i]->fk_idcliente;
+		$row[] = $aPedidos[$i]->fk_idestado;
+		$row[] = $aPedidos[$i]->fk_idsucursal;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aPedidos), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aPedidos), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
+    }
 }
 
 ?>

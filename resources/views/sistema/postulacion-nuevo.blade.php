@@ -23,7 +23,7 @@
 </ol>
 <script>
       function fsalir() {
-            location.href = "/admin/sistema/postulacion";
+            location.href = "/admin/postulaciones";
       }
 </script>
 @endsection
@@ -66,6 +66,14 @@ if (isset($msg)) {
                         <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" value="" required>
                   </div>
             </div>
+            <div class="row">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                  <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                  <div class="form-group col-6">
+                        <label>Link CV: *</label>
+                        <input type="text" id="txtLink" name="txtLink" class="form-control" value="" required>
+                  </div>
+            </div>      
       </form>
       <script>
             $("#form1").validate();
