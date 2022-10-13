@@ -11,7 +11,7 @@ class Cliente extends Model{
     public $timestamps = false;
 
     protected $fillable = [
-        'idcliente', 'nombre', 'apellido', 'whatssapp', 'correo', 'dni', 'clave',
+        'idcliente', 'nombre', 'telefono', 'correo', 'dni', 'clave',
     ];
 
     protected $hidden = [
@@ -21,9 +21,8 @@ class Cliente extends Model{
 	public function cargarDesdeRequest($request) {
         $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
         $this->nombre = $request->input('txtNombre');
-        $this->apellido = $request->input('txtApellido');
-        $this->whatssapp = $request->input('txtWhatssapp');
-        $this->correo = $request->input('lstCorreo');
+        $this->telefono = $request->input('txtTelefono');
+        $this->correo = $request->input('txtCorreo');
         $this->dni = $request->input('txtDni');
         $this->clave = $request->input('txtClave');
     }
@@ -33,8 +32,7 @@ class Cliente extends Model{
         $sql = "SELECT
 				idcliente,
 				nombre,
-				apellido,
-				whatssapp,
+				telefono,
 				correo, 
 				dni, 
 				clave              
@@ -42,25 +40,23 @@ class Cliente extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-
 	public function obtenerPorId($idCliente)
     {
         $sql = "SELECT
                 idcliente,
 				nombre,
-				apellido,
-				whatssapp,
+				telefono,
 				correo, 
 				dni, 
 				clave 
                 FROM clientes WHERE idcliente = $idCliente";
+            
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
             $this->idcliente = $lstRetorno[0]->idcliente;
             $this->nombre = $lstRetorno[0]->nombre;
-            $this->apellido = $lstRetorno[0]->apellido;
-            $this->whatssapp = $lstRetorno[0]->whatssapp;
+            $this->telefono = $lstRetorno[0]->telefono;
             $this->correo = $lstRetorno[0]->correo;
             $this->dni = $lstRetorno[0]->dni;
             $this->clave = $lstRetorno[0]->clave;
@@ -72,8 +68,7 @@ class Cliente extends Model{
 	public function guardar() {
         $sql = "UPDATE clientes SET
             nombre='$this->nombre',
-            apellido='$this->apellido',
-            whatssapp='$this->whatssapp',
+            telefono='$this->telefono',
             correo='$this->correo',
             dni='$this->dni',
             clave='$this->clave'
@@ -92,16 +87,14 @@ class Cliente extends Model{
     {
         $sql = "INSERT INTO clientes (
                 nombre,
-                apellido,
-                whatssapp,
+                telefono,
                 correo,
                 dni,
                 clave
-            ) VALUES (?, ?, ?, ?, ?, ?);";
+            ) VALUES (?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
             $this->nombre,
-            $this->apellido,
-            $this->whatssapp,
+            $this->telefono,
             $this->correo,
             $this->dni,
             $this->clave,

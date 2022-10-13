@@ -61,12 +61,18 @@ if (isset($msg)) {
                         <label>Cliente: *</label>
                         <select name="lstCliente" id="lstCliente" class="form-control">
                               <option value="" disabled selected>Seleccionar</option>
+                              @foreach($aClientes as $cliente)
+                                    <option value="{{$cliente->idcliente}}">{{$cliente->nombre}}</option>
+                              @endforeach
                         </select>
                   </div>
                   <div class="form-group col-6">
                         <label>Estado: *</label>
                         <select name="lstEstado" id="lstEstado" class="form-control">
                               <option value="" disabled selected>Seleccionar</option>
+                              @foreach($aEstados as $estado)
+                                    <option value="{{$estado->idestado}}">{{$estado->nombre}}</option>
+                              @endforeach
                         </select>
                   </div>
             </div>
