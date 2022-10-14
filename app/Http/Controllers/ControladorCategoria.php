@@ -2,25 +2,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Entidades\Tipo_producto;
+use App\Entidades\Categoria;
 require app_path() . '/start/constants.php';
 
-class ControladorTipo_producto extends Controller{
+class ControladorCategoria extends Controller{
       public function nuevo()
       {
-			$titulo= "Nuevo Tipo de producto";
+			$titulo= "Nueva categoria";
             return view('sistema.categoria-nuevo', compact('titulo'));
       }
 	public function index(){
-		$titulo= "Listado de Categorias";
+		$titulo= "Listado de categorias";
 		return view("sistema.categoria-listar", compact("titulo"));
 	}
 	 
       public function guardar(Request $request){
 			try {
 				//Define la entidad servicio
-				$titulo = "Modificar Tipo de producto";
-				$entidad = new Tipo_producto();
+				$titulo = "Modificar categoria";
+				$entidad = new Categoria();
 				$entidad->cargarDesdeRequest($request);
 	
 				//validaciones
@@ -41,7 +41,7 @@ class ControladorTipo_producto extends Controller{
 						$msg["ESTADO"] = MSG_SUCCESS;
 						$msg["MSG"] = OKINSERT;
 					}
-					$_POST["id"] = $entidad->idTipo_producto;
+					$_POST["id"] = $entidad->idcategoria;
 					return view('sistema.categoria-listar', compact('titulo', 'msg'));
 				}
 			} catch (Exception $e) {
@@ -49,16 +49,16 @@ class ControladorTipo_producto extends Controller{
 				$msg["MSG"] = ERRORINSERT;
 			}
 	
-			$id = $entidad->idTipo_producto;
-			$Tipo_producto = new Tipo_producto();
-			$Tipo_producto->obtenerPorId($id);
-			return view('sistema.categoria-nuevo', compact('msg', 'Tipo_producto', 'titulo')) . '?id=' . $Tipo_producto->idTipo_producto;
+			$id = $entidad->idcategoria;
+			$categoria = new Categoria();
+			$categoria->obtenerPorId($id);
+			return view('sistema.categoria-nuevo', compact('msg', 'categoria', 'titulo')) . '?id=' . $categoria->idcategoria;
       }
 	public function cargarGrilla()
     {
         $request = $_REQUEST;
 
-        $entidad = new Tipo_producto();
+        $entidad = new Categoria();
         $aCategorias = $entidad->obtenerFiltrado();
 
         $data = array();
@@ -70,14 +70,7 @@ class ControladorTipo_producto extends Controller{
 
         for ($i = $inicio; $i < count($aCategorias) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = '<a href="/admin/sistema/categorias/' . $aCategorias[$i]->idCategorias . '">' . $aCategorias[$i]->nombre . '</a>';
             $row[] = "<a href='/admin/categoria/" . $aCategorias[$i]->nombre . "'>" . $aCategorias[$i]->nombre . "</a>";
-            $row[] = $aCategorias[$i]->nombre;
-            $row[] = $aCategorias[$i]->descripcion;
-		$row[] = $aCategorias[$i]->precio;
-		$row[] = $aCategorias[$i]->cantidad;
-		$row[] = $aCategorias[$i]->imagen;
-		$row[] = $aCategorias[$i]->fk_idtipoTipo_producto;
             $cont++;
             $data[] = $row;
         }
@@ -90,10 +83,10 @@ class ControladorTipo_producto extends Controller{
         );
         return json_encode($json_data);
     }
-    public function editar($idTipoProducto){
+    public function editar($idCategoria){
 	$titulo= "Editar categoria";
-	$TipoProducto= new Tipo_producto();
-	$TipoProducto->obtenerPorId($idTipoProducto);
-	return view("sistema.categoria-nuevo", compact("titulo", "tipo_producto"));
+	$categoria= new Categoria();
+	$categoria->obtenerPorId($idCategoria);
+	return view("sistema.categoria-nuevo", compact("titulo", "categoria"));
     }
 }

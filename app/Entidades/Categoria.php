@@ -5,43 +5,43 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Tipo_producto extends Model{
+class Categoria extends Model{
 
-	protected $table = 'tipo_productos';
+	protected $table = 'categorias';
 	public $timestamps = false;
 
 	protected $fillable = [
-		'idtipoproducto', 'nombre',
+		'idcategorias', 'nombre',
 	];
 
 	protected $hidden = [];
 
 	public function cargarDesdeRequest($request)
 	{
-		$this->idtipoproducto = $request->input('id') != "0" ? $request->input('id') : $this->idtipoproducto;
+		$this->idcategorias = $request->input('id') != "0" ? $request->input('id') : $this->idcategorias;
 		$this->nombre = $request->input('txtNombre');
 	}
 
 	public function obtenerTodos()
 	{
 		$sql = "SELECT
-				idtipoproducto,
+				idcategorias,
                 nombre              
-                FROM tipo_productos A ORDER BY nombre ASC";
+                FROM categorias A ORDER BY nombre ASC";
 		$lstRetorno = DB::select($sql);
 		return $lstRetorno;
 	}
 
-	public function obtenerPorId($idTipoProducto)
+	public function obtenerPorId($idCategoria)
 	{
 		$sql = "SELECT
-                idtipoproducto,
+                idcategorias,
 				nombre 
-                FROM tipo_productos WHERE idtipoproducto = $idTipoProducto";
+                FROM categorias WHERE idcategorias = $idCategoria";
 		$lstRetorno = DB::select($sql);
 
 		if (count($lstRetorno) > 0) {
-			$this->idtipoproducto = $lstRetorno[0]->idtipoproducto;
+			$this->idcategorias = $lstRetorno[0]->idcategorias;
 			$this->nombre = $lstRetorno[0]->nombre;
 			return $this;
 		}
@@ -50,28 +50,28 @@ class Tipo_producto extends Model{
 
 	public function guardar()
 	{
-		$sql = "UPDATE tipo_productos SET
+		$sql = "UPDATE categorias SET
             nombre='$this->nombre'
-            WHERE idtipoproducto=?";
-		$affected = DB::update($sql, [$this->idtipoproducto]);
+            WHERE idcategorias=?";
+		$affected = DB::update($sql, [$this->idcategorias]);
 	}
 
 	public function eliminar()
 	{
-		$sql = "DELETE FROM tipo_productos WHERE
-            idtipoproducto=?";
-		$affected = DB::delete($sql, [$this->idtipoproducto]);
+		$sql = "DELETE FROM categorias WHERE
+            idcategorias=?";
+		$affected = DB::delete($sql, [$this->idcategorias]);
 	}
 
 	public function insertar()
 	{
-		$sql = "INSERT INTO tipo_productos (
+		$sql = "INSERT INTO categorias (
                 nombre 
             ) VALUES (?);";
 		$result = DB::insert($sql, [
 			$this->nombre,
 		]);
-		return $this->idtipoproducto = DB::getPdo()->lastInsertId();
+		return $this->idcategorias = DB::getPdo()->lastInsertId();
 	}
 
     public function obtenerFiltrado()
@@ -81,9 +81,9 @@ class Tipo_producto extends Model{
             0 => 'nombre',
         );
         $sql = "SELECT DISTINCT
-                idtipoproducto,
+                idcategorias,
                 nombre
-                    FROM tipo_productos
+                    FROM categorias
                 WHERE 1=1
                 ";
 

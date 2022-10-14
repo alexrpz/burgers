@@ -11,7 +11,7 @@ class Producto extends Model{
     public $timestamps = false;
 
     protected $fillable = [
-        'idproducto', 'nombre', 'descripcion', 'precio', 'cantidad', 'imagen', 'fk_idtipoproducto',
+        'idproducto', 'nombre', 'descripcion', 'precio', 'cantidad', 'imagen', 'fk_idcategoria',
     ];
 
     protected $hidden = [
@@ -25,7 +25,7 @@ class Producto extends Model{
         $this->precio = $request->input('txtPrecio');
         $this->cantidad = $request->input('txtCantidad');
         $this->imagen = $request->input('txtImagen');
-        $this->fk_idtipoproducto = $request->input('lstTipoProducto');
+        $this->fk_idcategoria = $request->input('lstCategoria');
     }
 
 	public function obtenerTodos()
@@ -37,7 +37,7 @@ class Producto extends Model{
 				precio,
 				cantidad, 
 				imagen, 
-				fk_idtipoproducto              
+				fk_idcategoria              
                 FROM productos A ORDER BY nombre ASC";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
@@ -52,7 +52,7 @@ class Producto extends Model{
 				precio,
 				cantidad, 
 				imagen, 
-				fk_idtipoproducto 
+				fk_idcategoria 
                 FROM productos WHERE idproducto = $idProducto";
         $lstRetorno = DB::select($sql);
 
@@ -63,7 +63,7 @@ class Producto extends Model{
             $this->precio = $lstRetorno[0]->precio;
             $this->cantidad = $lstRetorno[0]->cantidad;
             $this->imagen = $lstRetorno[0]->imagen;
-            $this->fk_idtipoproducto = $lstRetorno[0]->fk_idtipoproducto;
+            $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;
             return $this;
         }
         return null;
@@ -76,7 +76,7 @@ class Producto extends Model{
             precio=$this->precio,
             cantidad=$this->cantidad,
             imagen='$this->imagen',
-            fk_idtipoproducto=$this->fk_idtipoproducto
+            fk_idcategoria=$this->fk_idcategoria
             WHERE idproducto=?";
         $affected = DB::update($sql, [$this->idproducto]);
     }
@@ -96,7 +96,7 @@ class Producto extends Model{
                 precio,
                 cantidad,
                 imagen,
-                fk_idtipoproducto
+                fk_idcategoria
             ) VALUES (?, ?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
             $this->nombre,
@@ -104,7 +104,7 @@ class Producto extends Model{
             $this->precio,
             $this->cantidad,
             $this->imagen,
-            $this->fk_idtipoproducto,
+            $this->fk_idcategoria,
         ]);
         return $this->idproducto = DB::getPdo()->lastInsertId();
     }
@@ -117,7 +117,7 @@ class Producto extends Model{
             2 => 'precio',
             3 => 'cantidad',
             4 => 'imagen',
-            5 => 'fk_idtipoproducto',
+            5 => 'fk_idcategoria',
         );
         $sql = "SELECT DISTINCT
                 idproducto,
@@ -126,7 +126,7 @@ class Producto extends Model{
                 precio,
                 cantidad,
                 imagen,
-                fk_idtipoproducto
+                fk_idcategoria
                     FROM productos
                 WHERE 1=1
                 ";
@@ -138,7 +138,7 @@ class Producto extends Model{
             $sql .= " OR precio LIKE '%" . $request['search']['value'] . "%' )";
             $sql .= " OR cantidad LIKE '%" . $request['search']['value'] . "%' )";
             $sql .= " OR imagen LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR fk_idtipoproducto LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR fk_idcategoria LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
 

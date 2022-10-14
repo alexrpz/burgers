@@ -47,7 +47,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$producto->nombre}}" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $producto->nombre }}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Descripción: *</label>
@@ -74,11 +74,11 @@ if (isset($msg)) {
                         <input type="file" id="txtClave" name="txtClave" class="form-control-image" value="{{$producto->imagen}}" required>
                   </div>
                   <div class="form-group col-6">
-                        <label>Tipo de producto: *</label>
-                        <select name="lstTipoProducto" id="lstTipoProducto" class="form-control">
+                        <label>Categoria: *</label>
+                        <select name="lstCategoria" id="lstCategoria" class="form-control">
                               <option value=""disabled selected>Seleccionar</option>
-                              @foreach($aTipoProductos as $tipoproducto)
-                                    <option value="{{$tipoproducto->idtipoproducto}}">{{$tipoproducto->nombre}}</option>
+                              @foreach($aCategorias as $categoria)
+                                    <option value="{{$categoria->idcategoria}}">{{$categoria->nombre}}</option>
                               @endforeach
                         </select>
                   </div>

@@ -1,19 +1,23 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Entidades\Cliente;
 use Illuminate\Http\Request;
 use App\Entidades\Pedido;
 use App\Entidades\Estado;
-use App\Entidades\Pedido;
+
 require app_path() . '/start/constants.php';
 class ControladorPedido extends Controller{
       public function nuevo()
       {		
 			$titulo= "Nuevo pedido";
-            $estado= new Estado();
+            	$estado= new Estado();
 			$aEstados= $estado->obtenerTodos();
-			$Pedido= new Pedido();
-			$aPedidos= $Pedido->obtenerTodos();
-            return view("sistema.pedido-nuevo",compact("titulo", "aEstados", "aPedidos"));
+			$pedido= new Pedido();
+			$aPedidos= $pedido->obtenerTodos();
+			$cliente= new Cliente();
+			$aClientes= $cliente->obtenerTodos();
+            return view("sistema.pedido-nuevo",compact("titulo", "estado", "pedido", 'cliente'));
       }
       public function index(){
 		$titulo= "Listado de pedidos";

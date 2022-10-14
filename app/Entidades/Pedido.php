@@ -36,7 +36,7 @@ class Pedido extends Model{
 				fk_idcliente,
 				fk_idestado, 
 				fk_idsucursal            
-                FROM pedidos A ORDER BY nombre ASC";
+                FROM pedidos A ORDER BY idpedido ASC";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

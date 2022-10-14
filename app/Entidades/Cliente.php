@@ -14,9 +14,7 @@ class Cliente extends Model{
         'idcliente', 'nombre', 'telefono', 'correo', 'dni', 'clave',
     ];
 
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
 	public function cargarDesdeRequest($request) {
         $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;

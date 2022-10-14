@@ -94,3 +94,4 @@ class ControladorPostulacion extends Controller{
 	return view("sistema.postulacion-nuevo", compact("titulo", "postulacion"));
     }
 }
+?>
