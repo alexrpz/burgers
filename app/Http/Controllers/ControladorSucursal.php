@@ -6,8 +6,9 @@ require app_path() . '/start/constants.php';
 class ControladorSucursal extends Controller{
       public function nuevo()
       {
-            
-            return view('sistema.sucursal-nuevo');
+            $titulo= "Nueva sucursal";
+            $sucursal= new Sucursal();
+            return view('sistema.sucursal-nuevo', compact("titulo", 'sucursal'));
       }
       public function guardar(Request $request){
             try {

@@ -17,7 +17,7 @@ class ControladorPedido extends Controller{
 			$aPedidos= $pedido->obtenerTodos();
 			$cliente= new Cliente();
 			$aClientes= $cliente->obtenerTodos();
-            return view("sistema.pedido-nuevo",compact("titulo", "estado", "pedido", 'cliente'));
+            return view("sistema.pedido-nuevo",compact("titulo", 'estado', 'pedido', 'cliente'));
       }
       public function index(){
 		$titulo= "Listado de pedidos";
@@ -77,7 +77,6 @@ class ControladorPedido extends Controller{
 
         for ($i = $inicio; $i < count($aPedidos) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = '<a href="/admin/sistema/pedidos/' . $aPedidos[$i]->idPedidos . '">' . $aPedidos[$i]->idpedido . '</a>';
             $row[] = "<a href='/admin/pedido/" . $aPedidos[$i]->idpedido . "'>" . $aPedidos[$i]->idpedido . "</a>";
             $row[] = $aPedidos[$i]->total;
             $row[] = $aPedidos[$i]->fecha;

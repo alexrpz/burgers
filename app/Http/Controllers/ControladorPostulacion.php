@@ -8,7 +8,8 @@ class ControladorPostulacion extends Controller{
       public function nuevo()
       {
 			$titulo= "Nueva postulacion";
-            return view('sistema.postulacion-nuevo', compact('titulo'));
+			$postulacion= new Postulacion();
+            return view('sistema.postulacion-nuevo', compact('titulo', 'postulacion'));
 	  }
       public function index(){
 		$titulo= "Listado de postulaciones";

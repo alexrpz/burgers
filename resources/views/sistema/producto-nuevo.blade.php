@@ -71,7 +71,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Imagen: *</label><br>
-                        <input type="file" id="txtClave" name="txtClave" class="form-control-image" value="{{$producto->imagen}}" required>
+                        <input type="file" id="txtClave" name="txtClave" class="form-control-image" value="{{$producto->imagen}}" >
                   </div>
                   <div class="form-group col-6">
                         <label>Categoria: *</label>

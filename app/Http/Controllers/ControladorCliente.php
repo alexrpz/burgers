@@ -71,7 +71,7 @@ class ControladorCliente extends Controller{
 
         for ($i = $inicio; $i < count($aClientes) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-		$row[] = '<a href="/admin/sistema/clientes/' . $aClientes[$i]->idClientes . '">' . $aClientes[$i]->nombre . '</a>';
+		$row[] = '<a href="/admin/sistema/clientes/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>';
             $row[] = "<a href='/admin/cliente/" . $aClientes[$i]->nombre . "'>" . $aClientes[$i]->nombre . "</a>";
             $row[] = $aClientes[$i]->correo;
             $row[] = $aClientes[$i]->telefono;

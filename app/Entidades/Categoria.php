@@ -11,21 +11,21 @@ class Categoria extends Model{
 	public $timestamps = false;
 
 	protected $fillable = [
-		'idcategorias', 'nombre',
+		'idcategoria', 'nombre',
 	];
 
 	protected $hidden = [];
 
 	public function cargarDesdeRequest($request)
 	{
-		$this->idcategorias = $request->input('id') != "0" ? $request->input('id') : $this->idcategorias;
+		$this->idcategoria = $request->input('id') != "0" ? $request->input('id') : $this->idcategoria;
 		$this->nombre = $request->input('txtNombre');
 	}
 
 	public function obtenerTodos()
 	{
 		$sql = "SELECT
-				idcategorias,
+		idcategoria,
                 nombre              
                 FROM categorias A ORDER BY nombre ASC";
 		$lstRetorno = DB::select($sql);
@@ -35,13 +35,13 @@ class Categoria extends Model{
 	public function obtenerPorId($idCategoria)
 	{
 		$sql = "SELECT
-                idcategorias,
+                idcategoria,
 				nombre 
-                FROM categorias WHERE idcategorias = $idCategoria";
+                FROM categorias WHERE idcategoria = $idCategoria";
 		$lstRetorno = DB::select($sql);
 
 		if (count($lstRetorno) > 0) {
-			$this->idcategorias = $lstRetorno[0]->idcategorias;
+			$this->idcategoria = $lstRetorno[0]->idcategoria;
 			$this->nombre = $lstRetorno[0]->nombre;
 			return $this;
 		}
@@ -52,15 +52,15 @@ class Categoria extends Model{
 	{
 		$sql = "UPDATE categorias SET
             nombre='$this->nombre'
-            WHERE idcategorias=?";
-		$affected = DB::update($sql, [$this->idcategorias]);
+            WHERE idcategoria=?";
+		$affected = DB::update($sql, [$this->idcategoria]);
 	}
 
 	public function eliminar()
 	{
 		$sql = "DELETE FROM categorias WHERE
-            idcategorias=?";
-		$affected = DB::delete($sql, [$this->idcategorias]);
+            idcategoria=?";
+		$affected = DB::delete($sql, [$this->idcategoria]);
 	}
 
 	public function insertar()
@@ -71,7 +71,7 @@ class Categoria extends Model{
 		$result = DB::insert($sql, [
 			$this->nombre,
 		]);
-		return $this->idcategorias = DB::getPdo()->lastInsertId();
+		return $this->idcategoria = DB::getPdo()->lastInsertId();
 	}
 
     public function obtenerFiltrado()
@@ -81,7 +81,7 @@ class Categoria extends Model{
             0 => 'nombre',
         );
         $sql = "SELECT DISTINCT
-                idcategorias,
+                idcategoria,
                 nombre
                     FROM categorias
                 WHERE 1=1

@@ -3,13 +3,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entidades\Proveedor;
+use App\Entidades\Rubro;
+
 require app_path() . '/start/constants.php';
 
 class ControladorProveedor extends Controller{
       public function nuevo()
       {
 			$titulo= "Nuevo proveedor";
-            return view('sistema.proveedor-nuevo', compact('titulo'));
+			$proveedor= new Proveedor();
+			$rubro= new Rubro();
+			$aRubros= $rubro->obtenerTodos();
+            return view('sistema.proveedor-nuevo', compact("titulo", 'proveedor', 'rubro'));
       }
 	public function index(){
 		$titulo= "Listado de proveedores";

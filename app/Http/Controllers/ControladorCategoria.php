@@ -9,7 +9,8 @@ class ControladorCategoria extends Controller{
       public function nuevo()
       {
 			$titulo= "Nueva categoria";
-            return view('sistema.categoria-nuevo', compact('titulo'));
+			$categoria= new Categoria();
+            return view('sistema.categoria-nuevo', compact("titulo", 'categoria'));
       }
 	public function index(){
 		$titulo= "Listado de categorias";
@@ -24,7 +25,7 @@ class ControladorCategoria extends Controller{
 				$entidad->cargarDesdeRequest($request);
 	
 				//validaciones
-				if ($entidad->nombre == "" || $entidad->telefono == "" || $entidad->correo == "" || $entidad->clave == "") {
+				if ($entidad->nombre == "") {
 					$msg["ESTADO"] = MSG_ERROR;
 					$msg["MSG"] = "Complete todos los datos";
 				} else {

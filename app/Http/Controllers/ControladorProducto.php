@@ -14,7 +14,8 @@ class ControladorProducto extends Controller{
 			$titulo= "Nuevo producto";
 			$producto= new Producto();
 			$categoria= new Categoria();
-            return view('sistema.producto-nuevo', compact('titulo', 'producto', 'categoria'));
+			$aCategorias= $categoria->obtenerTodos();
+            return view('sistema.producto-nuevo', compact('titulo', 'producto', 'aCategorias'));
       }
 	public function index(){
 		$titulo= "Listado de productos";
@@ -29,7 +30,7 @@ class ControladorProducto extends Controller{
 				$entidad->cargarDesdeRequest($request);
 	
 				//validaciones
-				if ($entidad->nombre == "" || $entidad->fk_idcategoria == "" || $entidad->cantidad == "" || $entidad->descripcion == "" || $entidad->precio == "" || $entidad->imagen == "") {
+				if ($entidad->nombre == "" || $entidad->fk_idcategoria == "" || $entidad->cantidad == "" || $entidad->descripcion == "" || $entidad->precio == "") {
 					$msg["ESTADO"] = MSG_ERROR;
 					$msg["MSG"] = "Complete todos los datos";
 				} else {
