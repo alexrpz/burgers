@@ -47,7 +47,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$producto->nombre}}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Descripción: *</label>
@@ -59,11 +59,11 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Precio: *</label>
-                        <input type="text" id="txtPrecio" name="txtPrecio" class="form-control" value="" required>
+                        <input type="text" id="txtPrecio" name="txtPrecio" class="form-control" value="{{$producto->precio}}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Cantidad: *</label>
-                        <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" value="" required>
+                        <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" value="{{$producto->cantidad}}" required>
                   </div>
             </div>
             <div class="row">
@@ -71,12 +71,15 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Imagen: *</label><br>
-                        <input type="file" id="txtClave" name="txtClave" class="form-control-image" value="" required>
+                        <input type="file" id="txtClave" name="txtClave" class="form-control-image" value="{{$producto->imagen}}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Tipo de producto: *</label>
                         <select name="lstTipoProducto" id="lstTipoProducto" class="form-control">
                               <option value=""disabled selected>Seleccionar</option>
+                              @foreach($aTipoProductos as $tipoproducto)
+                                    <option value="{{$tipoproducto->idtipoproducto}}">{{$tipoproducto->nombre}}</option>
+                              @endforeach
                         </select>
                   </div>
             </div>

@@ -54,4 +54,10 @@ class ControladorProveedor extends Controller{
 			$proveedor->obtenerPorId($id);
 			return view('sistema.proveedor-nuevo', compact('msg', 'proveedor', 'titulo')) . '?id=' . $proveedor->idproveedor;
       }
+	public function editar($idProveedor){
+		$titulo= "Editar Proveedor";
+		$proveedor= new Proveedor();
+		$proveedor->obtenerPorId($idProveedor);
+		return view("sistema.proveedor-nuevo", compact("titulo", "proveedor"));
+	    }
 }

@@ -47,11 +47,11 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Total: *</label>
-                        <input type="text" id="txtTotal" name="txtTotal" class="form-control" value="" required>
+                        <input type="text" id="txtTotal" name="txtTotal" class="form-control" value="{{$pedido->total}}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Fecha: *</label>
-                        <input type="date" name="txtFecha" id="txtFecha" class="form-control">
+                        <input type="date" name="txtFecha" id="txtFecha" class="form-control" value="{{$pedido->fecha}}" required>
                   </div>
             </div>
             <div class="row">
@@ -59,7 +59,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Cliente: *</label>
-                        <select name="lstCliente" id="lstCliente" class="form-control">
+                        <select name="lstCliente" id="lstCliente" class="form-control" value="{{$pedido->fk_idcliente}}" required>
                               <option value="" disabled selected>Seleccionar</option>
                               @foreach($aClientes as $cliente)
                                     <option value="{{$cliente->idcliente}}">{{$cliente->nombre}}</option>
@@ -68,7 +68,7 @@ if (isset($msg)) {
                   </div>
                   <div class="form-group col-6">
                         <label>Estado: *</label>
-                        <select name="lstEstado" id="lstEstado" class="form-control">
+                        <select name="lstEstado" id="lstEstado" class="form-control" value="{{$pedido->fk_idestado}}" required>
                               <option value="" disabled selected>Seleccionar</option>
                               @foreach($aEstados as $estado)
                                     <option value="{{$estado->idestado}}">{{$estado->nombre}}</option>
@@ -81,8 +81,11 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Sucursal: *</label>
-                        <select name="lstSucursal" id="lstSucursal" class="form-control">
-                              <option value="" disabled selected>Seleccionar</option>
+                        <select name="lstSucursal" id="lstSucursal" class="form-control" value="{{$pedido->fk_idsucursal}}" required>
+                        <option value="" disabled selected>Seleccionar</option>
+                              @foreach($aSucursal as $sucursal)
+                                    <option value="{{$sucursal->idsucursal}}">{{$sucursal->nombre}}</option>
+                              @endforeach
                         </select>
                   </div>
             </div>

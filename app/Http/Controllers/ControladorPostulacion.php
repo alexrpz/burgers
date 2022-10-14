@@ -87,4 +87,10 @@ class ControladorPostulacion extends Controller{
         );
         return json_encode($json_data);
     }
+    public function editar($idPostulacion){
+	$titulo= "Editar Postulacion";
+	$postulacion= new Postulacion();
+	$postulacion->obtenerPorId($idPostulacion);
+	return view("sistema.postulacion-nuevo", compact("titulo", "postulacion"));
+    }
 }

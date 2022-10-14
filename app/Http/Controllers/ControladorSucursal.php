@@ -81,6 +81,12 @@ class ControladorSucursal extends Controller{
         );
         return json_encode($json_data);
     }
+    public function editar($idSucursal){
+	$titulo= "Editar Sucursal";
+	$sucursal= new Sucursal();
+	$sucursal->obtenerPorId($idSucursal);
+	return view("sistema.sucursal-nuevo", compact("titulo", "sucursal"));
+    }
 
 }
 ?>
