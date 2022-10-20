@@ -5,7 +5,8 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Categoria extends Model{
+class Categoria extends Model
+{
 
 	protected $table = 'categorias';
 	public $timestamps = false;
@@ -35,8 +36,8 @@ class Categoria extends Model{
 	public function obtenerPorId($idCategoria)
 	{
 		$sql = "SELECT
-                idcategoria,
-				nombre 
+                  idcategoria,
+			nombre 
                 FROM categorias WHERE idcategoria = $idCategoria";
 		$lstRetorno = DB::select($sql);
 
@@ -74,27 +75,27 @@ class Categoria extends Model{
 		return $this->idcategoria = DB::getPdo()->lastInsertId();
 	}
 
-    public function obtenerFiltrado()
-    {
-        $request = $_REQUEST;
-        $columns = array(
-            0 => 'nombre',
-        );
-        $sql = "SELECT DISTINCT
+	public function obtenerFiltrado()
+	{
+		$request = $_REQUEST;
+		$columns = array(
+			0 => 'nombre',
+		);
+		$sql = "SELECT DISTINCT
                 idcategoria,
                 nombre
                     FROM categorias
                 WHERE 1=1
                 ";
 
-        //Realiza el filtrado
-        if (!empty($request['search']['value'])) {
-            $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
-        }
-        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+		//Realiza el filtrado
+		if (!empty($request['search']['value'])) {
+			$sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
+		}
+		$sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
 
-        $lstRetorno = DB::select($sql);
+		$lstRetorno = DB::select($sql);
 
-        return $lstRetorno;
-    }
+		return $lstRetorno;
+	}
 }

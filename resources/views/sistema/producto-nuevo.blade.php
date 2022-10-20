@@ -30,18 +30,12 @@
 @section('contenido')
 <?php
 if (isset($msg)) {
-      echo '<div id = "msg"></div>';
       echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
+<div id="msg"></div>
 <div class="panel-body">
-      <div id="msg"></div>
-      <?php
-      if (isset($msg)) {
-            echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
-      }
-      ?>
-      <form id="form1" method="POST">
+      <form id="form1" method="POST" enctype="multipart/form-data">
             <div class="row">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
@@ -71,7 +65,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Imagen: *</label><br>
-                        <input type="file" id="txtClave" name="txtClave" class="form-control-image" value="{{$producto->imagen}}" >
+                        <input type="file" id="txtImagen" name="txtImagen" class="form-control-image" value="{{$producto->imagen}}" >
                   </div>
                   <div class="form-group col-6">
                         <label>Categoria: *</label>

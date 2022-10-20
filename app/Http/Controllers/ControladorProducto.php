@@ -58,7 +58,9 @@ class ControladorProducto extends Controller{
 			$id = $entidad->idproducto;
 			$producto = new Producto();
 			$producto->obtenerPorId($id);
-			return view('sistema.producto-nuevo', compact('msg', 'producto', 'titulo')) . '?id=' . $producto->idproducto;
+			$categoria= new Categoria();
+			$aCategorias= $categoria->obtenerTodos();
+			return view('sistema.producto-nuevo', compact('msg', 'producto', 'titulo', 'aCategorias')) . '?id=' . $producto->idproducto;
       }
 	public function cargarGrilla()
     {
@@ -76,7 +78,7 @@ class ControladorProducto extends Controller{
 
         for ($i = $inicio; $i < count($aProductos) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = "<a href='/admin/producto/" . $aProductos[$i]->nombre . "'>" . $aProductos[$i]->nombre . "</a>";
+            $row[] = "<a href='/admin/producto/" . $aProductos[$i]->idproducto . "'>" . $aProductos[$i]->nombre . "</a>";
             $row[] = $aProductos[$i]->descripcion;
 		$row[] = $aProductos[$i]->precio;
 		$row[] = $aProductos[$i]->cantidad;
@@ -101,4 +103,3 @@ class ControladorProducto extends Controller{
 	return view("sistema.producto-nuevo", compact("titulo", "producto"));
     }
 }
-?>

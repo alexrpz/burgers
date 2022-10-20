@@ -112,14 +112,20 @@ class Pedido extends Model{
             4 => 'fk_idsucursal',
         );
         $sql = "SELECT DISTINCT
-                idpedido,
-                total,
-				fecha,
-				fk_idcliente,
-				fk_idestado, 
-				fk_idsucursal
-                    FROM pedidos
-                WHERE 1=1
+            idpedido,
+            total,
+            fecha,
+            A.	fk_idcliente,
+            A.	fk_idestado, 
+            A.	fk_idsucursal,
+            B.nombre AS sucursal,
+            C.nombre AS cliente,
+            D.nombre AS estado
+            FROM pedidos A
+            INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
+            INNER JOIN clientes C ON A.fk_idcliente = C.idcliente
+            INNER JOIN estados D ON A.fk_idestado = D.idestado
+         WHERE 1=1
                 ";
 
         //Realiza el filtrado
@@ -136,6 +142,19 @@ class Pedido extends Model{
         $lstRetorno = DB::select($sql);
 
         return $lstRetorno;
+    }
+    public function existePedidosPorCliente($idCliente){
+        $sql = "SELECT
+                idpedido,
+				total,
+				fecha,
+				fk_idcliente,
+				fk_idestado, 
+				fk_idsucursal 
+                FROM pedidos WHERE fk_idcliente = $idCliente";
+        $lstRetorno = DB::select($sql);
+
+        return (count($lstRetorno) > 0);
     }
 }
 ?>

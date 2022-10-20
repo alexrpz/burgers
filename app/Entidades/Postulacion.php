@@ -5,29 +5,29 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Postulacion extends Model{
+class Postulacion extends Model
+{
 
-	protected $table = 'postulaciones';
+    protected $table = 'postulaciones';
     public $timestamps = false;
 
     protected $fillable = [
         'idpostulacion', 'nombre', 'apellido', 'telefono', 'correo', 'link',
     ];
 
-    protected $hidden = [
+    protected $hidden = [];
 
-    ];
-
-	public function cargarDesdeRequest($request) {
+    public function cargarDesdeRequest($request)
+    {
         $this->idpostulacion = $request->input('id') != "0" ? $request->input('id') : $this->idpostulacion;
         $this->nombre = $request->input('txtNombre');
         $this->apellido = $request->input('txtApellido');
         $this->telefono = $request->input('txtTelefono');
-        $this->correo = $request->input('lstCorreo');
+        $this->correo = $request->input('txtCorreo');
         $this->link = $request->input('txtLink');
     }
 
-	public function obtenerTodos()
+    public function obtenerTodos()
     {
         $sql = "SELECT
 				idpostulacion,
@@ -40,8 +40,7 @@ class Postulacion extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-
-	public function obtenerPorId($idPostulacion)
+    public function obtenerPorId($idPostulacion)
     {
         $sql = "SELECT
                 idpostulacion,
@@ -65,14 +64,16 @@ class Postulacion extends Model{
         return null;
     }
 
-	public function guardar() {
+    public function guardar()
+    {
         $sql = "UPDATE postulaciones SET
             nombre='$this->nombre',
             apellido='$this->apellido',
-            telefono=$this->telefono,
+            telefono='$this->telefono',
             correo='$this->correo',
-            link='$this->link',
+            link='$this->link'
             WHERE idpostulacion=?";
+       // print_r($sql);exit;
         $affected = DB::update($sql, [$this->idpostulacion]);
     }
 
@@ -83,7 +84,7 @@ class Postulacion extends Model{
         $affected = DB::delete($sql, [$this->idpostulacion]);
     }
 
-	public function insertar()
+    public function insertar()
     {
         $sql = "INSERT INTO postulaciones (
                 nombre,
@@ -118,9 +119,9 @@ class Postulacion extends Model{
                 telefono,
                 correo,
                 link
-                    FROM postulaciones
-                WHERE 1=1
-                ";
+                FROM postulaciones
+            WHERE 1=1
+            ";
 
         //Realiza el filtrado
         if (!empty($request['search']['value'])) {

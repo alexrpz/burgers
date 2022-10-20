@@ -18,7 +18,7 @@ class ControladorSucursal extends Controller{
                   $entidad->cargarDesdeRequest($request);
 
                   //validaciones
-                  if ($entidad->nombre == "") {
+                  if ($entidad->nombre == "" || $entidad->direccion == "" || $entidad->horario == "" || $entidad->link == "" || $entidad->telefono == "") {
                         $msg["sucursal"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                   } else {
@@ -64,8 +64,7 @@ class ControladorSucursal extends Controller{
 
         for ($i = $inicio; $i < count($aSucursales) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = '<a href="/admin/sistema/Sucursales/' . $aSucursales[$i]->idSucursales . '">' . $aSucursales[$i]->nombre . '</a>';
-            $row[] = "<a href='/admin/Sucursal/" . $aSucursales[$i]->nombre . "'>" . $aSucursales[$i]->nombre . "</a>";
+            $row[] = "<a href='/admin/sucursal/" . $aSucursales[$i]->idsucursal . "'>" . $aSucursales[$i]->nombre . "</a>";
             $row[] = $aSucursales[$i]->direccion;
 		$row[] = $aSucursales[$i]->telefono;
 		$row[] = $aSucursales[$i]->link;

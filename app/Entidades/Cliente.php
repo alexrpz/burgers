@@ -5,9 +5,10 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model{
+class Cliente extends Model
+{
 
-	protected $table = 'clientes';
+    protected $table = 'clientes';
     public $timestamps = false;
 
     protected $fillable = [
@@ -16,7 +17,8 @@ class Cliente extends Model{
 
     protected $hidden = [];
 
-	public function cargarDesdeRequest($request) {
+    public function cargarDesdeRequest($request)
+    {
         $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
         $this->nombre = $request->input('txtNombre');
         $this->telefono = $request->input('txtTelefono');
@@ -25,7 +27,7 @@ class Cliente extends Model{
         $this->clave = $request->input('txtClave');
     }
 
-	public function obtenerTodos()
+    public function obtenerTodos()
     {
         $sql = "SELECT
 				idcliente,
@@ -38,7 +40,7 @@ class Cliente extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-	public function obtenerPorId($idCliente)
+    public function obtenerPorId($idCliente)
     {
         $sql = "SELECT
                 idcliente,
@@ -48,7 +50,7 @@ class Cliente extends Model{
 				dni, 
 				clave 
                 FROM clientes WHERE idcliente = $idCliente";
-            
+
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
@@ -63,7 +65,8 @@ class Cliente extends Model{
         return null;
     }
 
-	public function guardar() {
+    public function guardar()
+    {
         $sql = "UPDATE clientes SET
             nombre='$this->nombre',
             telefono='$this->telefono',
@@ -81,7 +84,7 @@ class Cliente extends Model{
         $affected = DB::delete($sql, [$this->idcliente]);
     }
 
-	public function insertar()
+    public function insertar()
     {
         $sql = "INSERT INTO clientes (
                 nombre,

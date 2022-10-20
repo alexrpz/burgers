@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
+use App\Entidades\Pedido;
 require app_path() . '/start/constants.php';
 
 class ControladorCliente extends Controller{
@@ -71,11 +72,10 @@ class ControladorCliente extends Controller{
 
         for ($i = $inicio; $i < count($aClientes) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-		$row[] = '<a href="/admin/sistema/clientes/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>';
-            $row[] = "<a href='/admin/cliente/" . $aClientes[$i]->nombre . "'>" . $aClientes[$i]->nombre . "</a>";
-            $row[] = $aClientes[$i]->correo;
-            $row[] = $aClientes[$i]->telefono;
+		$row[] = "<a href='/admin/cliente/" . $aClientes[$i]->idcliente . "'>" . $aClientes[$i]->nombre . "</a>";
 		$row[] = $aClientes[$i]->dni;
+		$row[] = $aClientes[$i]->correo;
+		$row[] = $aClientes[$i]->telefono;
 		$row[] = $aClientes[$i]->clave;
             $cont++;
             $data[] = $row;
@@ -95,6 +95,22 @@ class ControladorCliente extends Controller{
 	$cliente->obtenerPorId($idCliente);
 	return view("sistema.cliente-nuevo", compact("titulo", "cliente"));
     }
-
+    public function eliminar(Request $request){
+	$idCliente = $request->input("id");
+	$pedido = new Pedido();
+	//Si el cliente tiene un pedido asosiado no se tiene que poder eliminar
+	if($pedido->existePedidosPorCliente($idCliente)){
+		$resultado["err"] = EXIT_FAILURE;
+		$resultado["mensaje"] = "No se puede eliminar un cliente con pedidos asociados";
+	}else{
+		//Sino si
+		$cliente= new Cliente();
+		$cliente->idcliente = $idCliente;
+		$cliente->eliminar();
+		$resultado["err"] = EXIT_SUCCESS;
+		$resultado["mensaje"] = "Registro eliminado exitosamente";
+	}
+	return json_encode($resultado);
+    }
 }
 ?>

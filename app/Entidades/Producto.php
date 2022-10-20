@@ -127,7 +127,7 @@ class Producto extends Model{
                 cantidad,
                 imagen,
                 fk_idcategoria
-                    FROM productos
+                FROM productos
                 WHERE 1=1
                 ";
 
