@@ -11,7 +11,7 @@ class Proveedor extends Model{
 	public $timestamps = false;
 
 	protected $fillable = [
-		'idproveedor', 'nombre', 'domicilio', 'cuit', 'fk_idrubro',
+		'idproveedor', 'name', 'domicilio', 'telefono', 'cuit', 'fk_idrubro',
 	];
 
 	protected $hidden = [];
@@ -19,8 +19,9 @@ class Proveedor extends Model{
 	public function cargarDesdeRequest($request)
 	{
 		$this->idproveedor = $request->input('id') != "0" ? $request->input('id') : $this->idproveedor;
-		$this->nombre = $request->input('txtNombre');
+		$this->name = $request->input('txtNombre');
 		$this->domicilio = $request->input('txtDomicilio');
+		$this->telefono = $request->input('txtTelefono');
 		$this->cuit = $request->input('txtCuit');
 		$this->fk_idrubro = $request->input('lstRubro');
 	}
@@ -29,11 +30,12 @@ class Proveedor extends Model{
 	{
 		$sql = "SELECT
 				idproveedor,
-				nombre,
+				name,
 				domicilio,
+				telefono,
 				cuit,
 				fk_idrubro             
-                FROM proveedores A ORDER BY nombre ASC";
+                FROM proveedores A ORDER BY name ASC";
 		$lstRetorno = DB::select($sql);
 		return $lstRetorno;
 	}
@@ -42,8 +44,9 @@ class Proveedor extends Model{
 	{
 		$sql = "SELECT
                 idproveedor,
-				nombre,
+				name,
 				domicilio,
+				telefono,
 				cuit,
 				fk_idrubro
                 FROM proveedores WHERE idproveedor = $idProveedor";
@@ -51,8 +54,9 @@ class Proveedor extends Model{
 
 		if (count($lstRetorno) > 0) {
 			$this->idproveedor = $lstRetorno[0]->idproveedor;
-			$this->nombre = $lstRetorno[0]->nombre;
+			$this->name = $lstRetorno[0]->name;
 			$this->domicilio = $lstRetorno[0]->domicilio;
+			$this->telefono = $lstRetorno[0]->telefono;
 			$this->cuit = $lstRetorno[0]->cuit;
 			$this->fk_idrubro = $lstRetorno[0]->fk_idrubro;
 			return $this;
@@ -63,10 +67,11 @@ class Proveedor extends Model{
 	public function guardar()
 	{
 		$sql = "UPDATE proveedores SET
-            nombre='$this->nombre',
+            name='$this->name',
             domicilio='$this->domicilio',
-            cuit=$this->cuit,
-            fk_idrubro='$this->fk_idrubro',
+		telefono='$this->telefono',
+            cuit='$this->cuit',
+            fk_idrubro='$this->fk_idrubro'
             WHERE idproveedor=?";
 		$affected = DB::update($sql, [$this->idproveedor]);
 	}
@@ -80,14 +85,16 @@ class Proveedor extends Model{
 	public function insertar()
 	{
 		$sql = "INSERT INTO proveedores (
-                nombre,
+                name,
                 domicilio,
+		    telefono,
                 cuit,
                 fk_idrubro
-            ) VALUES (?, ?, ?, ?);";
+            ) VALUES (?, ?, ?, ?, ?);";
 		$result = DB::insert($sql, [
-			$this->nombre,
+			$this->name,
 			$this->domicilio,
+			$this->telefono,
 			$this->cuit,
 			$this->fk_idrubro,
 		]);
@@ -97,27 +104,32 @@ class Proveedor extends Model{
     {
         $request = $_REQUEST;
         $columns = array(
-            0 => 'nombre',
+            0 => 'name',
             1 => 'domicilio',
-            2 => 'cuit',
-            3 => 'fk_idrubro',
+		2 => 'telefono',
+            3 => 'cuit',
+            4 => 'fk_idrubro',
         );
-        $sql = "SELECT DISTINCT
-                idproveedor,
-                nombre,
-                domicilio,
-                cuit,
-                fk_idrubro
-                    FROM proveedores
-                WHERE 1=1
+        "SELECT DISTINCT
+		idproveedor,
+		name,
+		domicilio,
+		telefono,
+		cuit,
+		A.	 fk_idrubro,
+		B.name AS rubro
+		FROM proveedores A
+		INNER JOIN rubros B ON A.fk_idrubro = B.idrubro
+		WHERE 1=1
                 ";
 
         //Realiza el filtrado
         if (!empty($request['search']['value'])) {
-            $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR domicilio LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " AND ( name LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR domicilio LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' )";
             $sql .= " OR cuit LIKE '%" . $request['search']['value'] . "%' )";
-		$sql .= " OR fk_idrubro LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR fk_idrubro LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
 

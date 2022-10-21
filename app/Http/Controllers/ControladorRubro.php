@@ -9,7 +9,8 @@ class ControladorRubro extends Controller{
       public function nuevo()
       {
 			$titulo= "Nuevo rubro";
-            return view('sistema.rubro-nuevo', compact('titulo'));
+			$rubro= new Rubro();
+            return view('sistema.rubro-nuevo', compact('titulo', 'rubro'));
       }
 	public function index(){
 		$titulo= "Listado de rubros";
@@ -70,8 +71,7 @@ class ControladorRubro extends Controller{
 
         for ($i = $inicio; $i < count($aRubros) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = '<a href="/admin/sistema/Rubros/' . $aRubros[$i]->idRubros . '">' . $aRubros[$i]->nombre . '</a>';
-            $row[] = "<a href='/admin/Rubro/" . $aRubros[$i]->nombre . "'>" . $aRubros[$i]->nombre . "</a>";
+            $row[] = "<a href='/admin/rubro/" . $aRubros[$i]->idrubro . "'>" . $aRubros[$i]->nombre . "</a>";
             $cont++;
             $data[] = $row;
         }
@@ -83,5 +83,20 @@ class ControladorRubro extends Controller{
             "data" => $data,
         );
         return json_encode($json_data);
+    }
+    public function editar($idRubro){
+	$titulo= "Editar rubro";
+	$rubro= new rubro();
+	$rubro->obtenerPorId($idRubro);
+	return view("sistema.rubro-nuevo", compact("titulo", "rubro"));
+    }
+    public function eliminar(Request $request){
+	$idrubro = $request->input("id");
+		$rubro= new Rubro();
+		$rubro->idrubro = $idrubro;
+		$rubro->eliminar();
+		$resultado["err"] = EXIT_SUCCESS;
+		$resultado["mensaje"] = "Registro eliminado exitosamente";
+	return json_encode($resultado);
     }
 }

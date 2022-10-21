@@ -115,7 +115,7 @@ class Pedido extends Model{
             idpedido,
             total,
             fecha,
-            A.	fk_idcliente,
+            A.  fk_idcliente,
             A.	fk_idestado, 
             A.	fk_idsucursal,
             B.nombre AS sucursal,

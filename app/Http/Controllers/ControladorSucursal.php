@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Entidades\Sucursal;
 require app_path() . '/start/constants.php';
+
 class ControladorSucursal extends Controller{
       public function nuevo()
       {
@@ -10,6 +12,10 @@ class ControladorSucursal extends Controller{
             $sucursal= new Sucursal();
             return view('sistema.sucursal-nuevo', compact("titulo", 'sucursal'));
       }
+      public function index(){
+		$titulo= "Listado de sucursales";
+		return view("sistema.sucursal-listar", compact("titulo"));
+	}
       public function guardar(Request $request){
             try {
                   //Define la entidad servicio
@@ -85,9 +91,17 @@ class ControladorSucursal extends Controller{
 	$titulo= "Editar Sucursal";
 	$sucursal= new Sucursal();
 	$sucursal->obtenerPorId($idSucursal);
-	return view("sistema.sucursal-nuevo", compact("titulo", "sucursal"));
+	return view("sistema.sucursal-nuevo", compact("titulo", 'sucursal'));
     }
-
+    public function eliminar(Request $request){
+	$idsucursal = $request->input("id");
+		$sucursal= new Sucursal();
+		$sucursal->idsucursal = $idsucursal;
+		$sucursal->eliminar();
+		$resultado["err"] = EXIT_SUCCESS;
+		$resultado["mensaje"] = "Registro eliminado exitosamente";
+	return json_encode($resultado);
+    }
 }
 ?>
 <?php

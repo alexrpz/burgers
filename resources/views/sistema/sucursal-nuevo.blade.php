@@ -34,18 +34,18 @@ if (isset($msg)) {
 }
 ?>
 <div id="msg"></div>
-<div class="panel-body"> 
+<div class="panel-body">
       <form id="form1" method="POST">
             <div class="row">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$sucursal->nombre}}" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $sucursal->nombre }}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Dirección: *</label>
-                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{$sucursal->direccion}}" required>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{ $sucursal->direccion }}" required>
                   </div>
             </div>
             <div class="row">
@@ -53,11 +53,11 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Link mapa: *</label>
-                        <input type="text" id="txtLink" name="txtLink" class="form-control" value="{{$sucursal->link}}" required>
+                        <input type="text" id="txtLink" name="txtLink" class="form-control" value="{{ $sucursal->link }}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Teléfono: *</label>
-                        <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" value="{{$sucursal->telefono}}" required>
+                        <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" value="{{ $sucursal->telefono }}" required>
                   </div>
             </div>
             <div class="row">
@@ -65,7 +65,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Horario: *</label>
-                        <input type="text" id="txtHorario" name="txtHorario" class="form-control" value="{{$sucursal->horario}}" required>
+                        <input type="text" id="txtHorario" name="txtHorario" class="form-control" value="{{ $sucursal->horario }}" required>
                   </div>
       </form>
       <script>
@@ -80,6 +80,28 @@ if (isset($msg)) {
                         msgShow("Corrija los errores e intente nuevamente.", "danger");
                         return false;
                   }
+            }
+
+            function eliminar() {
+                  $.ajax({
+                        type: "GET",
+                        url: "{{ asset('admin/sucursal/eliminar') }}",
+                        data: {
+                              id: globalId
+                        },
+                        async: true,
+                        dataType: "json",
+                        success: function(data) {
+                              if (data.err = "0") {
+                                    msgShow(data.mensaje, "success");
+                                    $("#btnEnviar").hide();
+                                    $("#btnEliminar").hide();
+                                    $('#mdlEliminar').modal('toggle');
+                              } else {
+                                    msgShow(data.mensaje, "danger");
+                              }
+                        }
+                  });
             }
       </script>
       @endsection

@@ -37,7 +37,7 @@ class Rubro extends Model
 	{
 		$sql = "SELECT
                 idrubro,
-				nombre 
+			nombre 
                 FROM rubros WHERE idrubro = $idRubro";
 		$lstRetorno = DB::select($sql);
 
@@ -82,7 +82,7 @@ class Rubro extends Model
         );
         $sql = "SELECT DISTINCT
                 idrubro,
-                nombre,
+                nombre
                     FROM rubros
                 WHERE 1=1
                 ";
