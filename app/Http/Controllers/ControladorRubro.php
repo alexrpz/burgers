@@ -86,7 +86,7 @@ class ControladorRubro extends Controller{
     }
     public function editar($idRubro){
 	$titulo= "Editar rubro";
-	$rubro= new rubro();
+	$rubro= new Rubro();
 	$rubro->obtenerPorId($idRubro);
 	return view("sistema.rubro-nuevo", compact("titulo", "rubro"));
     }

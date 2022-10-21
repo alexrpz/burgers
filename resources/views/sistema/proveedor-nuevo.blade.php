@@ -57,10 +57,10 @@ if (isset($msg)) {
                   </div>
                   <div class="form-group col-6">
                         <label>Rubro: *</label>
-                        <select name="lstRubro" id="lstRubro" class="form-control" value="{{$proveedor->fk_idrubro}}">
+                        <select name="lstRubro" id="lstRubro" class="form-control">
                               <option value="" selected disabled>Seleccionar</option>
                               @foreach($aRubros as $rubro)
-                                    <option value="{{$rubro->idrubro}}">"{{$rubro->idrubro}}"</option>
+                                    <option value="{{$rubro->idrubro}}">"{{$rubro->nombre}}"</option>
                               @endforeach
                         </select>
                   </div>

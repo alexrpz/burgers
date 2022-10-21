@@ -25,27 +25,27 @@ class ControladorSucursal extends Controller{
 
                   //validaciones
                   if ($entidad->nombre == "" || $entidad->direccion == "" || $entidad->horario == "" || $entidad->link == "" || $entidad->telefono == "") {
-                        $msg["sucursal"] = MSG_ERROR;
+                        $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                   } else {
                         if ($_POST["id"] > 0) {
                               //Es actualizacion
                               $entidad->guardar();
 
-                              $msg["sucursal"] = MSG_SUCCESS;
+                              $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         } else {
                               //Es nuevo
                               $entidad->insertar();
 
-                              $msg["sucursal"] = MSG_SUCCESS;
+                              $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
                         $_POST["id"] = $entidad->idsucursal;
                         return view('sistema.sucursal-listar', compact('titulo', 'msg'));
                   }
             } catch (Exception $e) {
-                  $msg["sucursal"] = MSG_ERROR;
+                  $msg["ESTADO"] = MSG_ERROR;
                   $msg["MSG"] = ERRORINSERT;
             }
 
@@ -103,6 +103,5 @@ class ControladorSucursal extends Controller{
 	return json_encode($resultado);
     }
 }
-?>
-<?php
+
       

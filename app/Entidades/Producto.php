@@ -5,30 +5,30 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Producto extends Model{
+class Producto extends Model
+{
 
-	protected $table = 'productos';
+    protected $table = 'productos';
     public $timestamps = false;
 
     protected $fillable = [
         'idproducto', 'nombre', 'descripcion', 'precio', 'cantidad', 'imagen', 'fk_idcategoria',
     ];
 
-    protected $hidden = [
+    protected $hidden = [];
 
-    ];
-
-	public function cargarDesdeRequest($request) {
+    public function cargarDesdeRequest($request)
+    {
         $this->idproducto = $request->input('id') != "0" ? $request->input('id') : $this->idproducto;
         $this->nombre = $request->input('txtNombre');
         $this->descripcion = $request->input('txtDescripcion');
         $this->precio = $request->input('txtPrecio');
         $this->cantidad = $request->input('txtCantidad');
-        $this->imagen = $request->input('txtImagen');
+        $this->imagen = "";
         $this->fk_idcategoria = $request->input('lstCategoria');
     }
 
-	public function obtenerTodos()
+    public function obtenerTodos()
     {
         $sql = "SELECT
 				idproducto,
@@ -43,7 +43,7 @@ class Producto extends Model{
         return $lstRetorno;
     }
 
-	public function obtenerPorId($idProducto)
+    public function obtenerPorId($idProducto)
     {
         $sql = "SELECT
                 idproducto,
@@ -69,7 +69,8 @@ class Producto extends Model{
         return null;
     }
 
-	public function guardar() {
+    public function guardar()
+    {
         $sql = "UPDATE productos SET
             nombre='$this->nombre',
             descripcion='$this->descripcion',
@@ -88,7 +89,7 @@ class Producto extends Model{
         $affected = DB::delete($sql, [$this->idproducto]);
     }
 
-	public function insertar()
+    public function insertar()
     {
         $sql = "INSERT INTO productos (
                 nombre,
@@ -112,33 +113,35 @@ class Producto extends Model{
     {
         $request = $_REQUEST;
         $columns = array(
-            0 => 'nombre',
-            1 => 'descripcion',
-            2 => 'precio',
-            3 => 'cantidad',
-            4 => 'imagen',
-            5 => 'fk_idcategoria',
+            0 => 'A.nombre',
+            1 => 'A.descripcion',
+            2 => 'A.precio',
+            3 => 'A.cantidad',
+            4 => 'A.imagen',
+            5 => 'B.nombre'
         );
         $sql = "SELECT DISTINCT
-                idproducto,
-                nombre,
-                descripcion,
-                precio,
-                cantidad,
-                imagen,
-                fk_idcategoria
-                FROM productos
+                A.idproducto,
+                A.nombre,
+                A.descripcion,
+                A.precio,
+                A.cantidad,
+                A.imagen,
+                A.fk_idcategoria,
+                B.nombre AS categoria
+                FROM productos A
+                INNER JOIN categorias B ON A.fk_idcategoria = B.idcategoria
                 WHERE 1=1
                 ";
 
         //Realiza el filtrado
         if (!empty($request['search']['value'])) {
-            $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR descripcion LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR precio LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR cantidad LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR imagen LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR fk_idcategoria LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR precio LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR cantidad LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR imagen LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
 

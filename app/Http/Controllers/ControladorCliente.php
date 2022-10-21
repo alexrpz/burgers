@@ -4,18 +4,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
 use App\Entidades\Pedido;
+use App\Entidades\Sistema\Usuario;
+use App\Entidades\Sistema\Patente;
 require app_path() . '/start/constants.php';
 
 class ControladorCliente extends Controller{
       public function nuevo()
       {
-			$titulo= "Nuevo cliente";
-			$cliente= new Cliente();
-            return view('sistema.cliente-nuevo', compact("titulo", 'cliente'));
+		$titulo= "Nuevo cliente";
+		if (Usuario::autenticado() == true) {
+			if (!Patente::autorizarOperacion("CLIENTEALTA")) {
+			    $codigo = "CLIENTEALTA";
+			    $mensaje = "No tiene permisos para la operaci&oacute;n.";
+			    return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+			} else {
+			    return view('sistema.cliente-listar', compact('titulo'));
+			}
+		  } else {
+			return redirect('admin/login');
+		  }
       }
-	public function index(){
-		$titulo= "Listado de clientes";
-		return view("sistema.cliente-listar", compact("titulo"));
+		public function index()
+    {
+        $titulo = "Listado de clientes";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("CLIENTECONSULTA")) {
+                $codigo = "CLIENTECONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                return view('sistema.cliente-listar', compact('titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
 	}
 	 
       public function guardar(Request $request){
@@ -91,26 +113,46 @@ class ControladorCliente extends Controller{
     }
     public function editar($idCliente){
 	$titulo= "Editar cliente";
-	$cliente= new Cliente();
-	$cliente->obtenerPorId($idCliente);
-	return view("sistema.cliente-nuevo", compact("titulo", "cliente"));
+	if (Usuario::autenticado() == true) {
+		if (!Patente::autorizarOperacion("CLIENTEEDITAR")) {
+		    $codigo = "CLIENTEALTA";
+		    $mensaje = "No tiene permisos para la operaci&oacute;n.";
+		    return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+		} else {
+			$cliente= new Cliente();
+			$cliente->obtenerPorId($idCliente);
+			return view("sistema.cliente-nuevo", compact("titulo", "cliente"));
+		}
+	  } else {
+		return redirect('admin/login');
+	  }
     }
     public function eliminar(Request $request){
-	$idCliente = $request->input("id");
-	$pedido = new Pedido();
-	//Si el cliente tiene un pedido asosiado no se tiene que poder eliminar
-	if($pedido->existePedidosPorCliente($idCliente)){
+	if (Usuario::autenticado() == true) {
+		if (!Patente::autorizarOperacion("CLIENTEELIMINAR")) {
+		      $resultado["err"] = EXIT_FAILURE;
+			$resultado["mensaje"] = "No se puede eliminar un cliente con pedidos asociados";
+		} else {
+			$idCliente = $request->input("id");
+			$pedido = new Pedido();
+		//Si el cliente tiene un pedido asosiado no se tiene que poder eliminar
+		if($pedido->existePedidosPorCliente($idCliente)){
+			$resultado["err"] = EXIT_FAILURE;
+			$resultado["mensaje"] = "No se puede eliminar un cliente con pedidos asociados";
+		}else{
+			//Sino si
+			$cliente= new Cliente();
+			$cliente->idcliente = $idCliente;
+			$cliente->eliminar();
+			$resultado["err"] = EXIT_SUCCESS;
+			$resultado["mensaje"] = "Registro eliminado exitosamente";
+		}
+	  } 
+	}else {
 		$resultado["err"] = EXIT_FAILURE;
-		$resultado["mensaje"] = "No se puede eliminar un cliente con pedidos asociados";
-	}else{
-		//Sino si
-		$cliente= new Cliente();
-		$cliente->idcliente = $idCliente;
-		$cliente->eliminar();
-		$resultado["err"] = EXIT_SUCCESS;
-		$resultado["mensaje"] = "Registro eliminado exitosamente";
+		$resultado["mensaje"] = "Usuario no autenticado";
+	  }
+	  return json_encode($resultado);
 	}
-	return json_encode($resultado);
-    }
 }
 ?>

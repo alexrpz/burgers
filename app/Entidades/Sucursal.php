@@ -79,8 +79,8 @@ class Sucursal extends Model
 
 	public function eliminar()
 	{
-		$sql = "DELETE FROM sucursales WHERE 
-			idsucursal=?";
+		$sql = "DELETE FROM sucursales WHERE
+            idsucursal=?";
 		$affected = DB::delete($sql, [$this->idsucursal]);
 	}
 
@@ -127,8 +127,8 @@ class Sucursal extends Model
 		if (!empty($request['search']['value'])) {
 			$sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
 			$sql .= " OR direccion LIKE '%" . $request['search']['value'] . "%' ";
-			$sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' )";
-			$sql .= " OR link LIKE '%" . $request['search']['value'] . "%' )";
+			$sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' ";
+			$sql .= " OR link LIKE '%" . $request['search']['value'] . "%' ";
 			$sql .= " OR horario LIKE '%" . $request['search']['value'] . "%' )";
 		}
 		$sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];

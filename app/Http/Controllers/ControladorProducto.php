@@ -78,12 +78,12 @@ class ControladorProducto extends Controller{
 
         for ($i = $inicio; $i < count($aProductos) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = "<a href='/admin/producto/" . $aProductos[$i]->idproducto . "'>" . $aProductos[$i]->nombre . "</a>";
-            $row[] = $aProductos[$i]->descripcion;
-		$row[] = $aProductos[$i]->precio;
-		$row[] = $aProductos[$i]->cantidad;
 		$row[] = $aProductos[$i]->imagen;
-		$row[] = $aProductos[$i]->fk_idcategoria;
+		$row[] = "<a href='/admin/producto/" . $aProductos[$i]->idproducto . "'>" . $aProductos[$i]->nombre . "</a>";
+            $row[] = $aProductos[$i]->descripcion;
+		$row[] = $aProductos[$i]->cantidad;
+		$row[] = $aProductos[$i]->categoria;
+		$row[] = "$" . number_format($aProductos[$i]->precio, 2, ".");
             $cont++;
             $data[] = $row;
         }
@@ -100,6 +100,17 @@ class ControladorProducto extends Controller{
 	$titulo= "Editar producto";
 	$producto = new Producto();
 	$producto->obtenerPorId($idProducto);
-	return view("sistema.producto-nuevo", compact("titulo", "producto"));
+	$categoria= new Categoria();
+			$aCategorias= $categoria->obtenerTodos();
+	return view("sistema.producto-nuevo", compact("titulo", "producto", 'aCategorias'));
+    }
+    public function eliminar(Request $request){
+	$idproducto = $request->input("id");
+		$producto= new Producto();
+		$producto->idproducto = $idproducto;
+		$producto->eliminar();
+		$resultado["err"] = EXIT_SUCCESS;
+		$resultado["mensaje"] = "Registro eliminado exitosamente";
+	return json_encode($resultado);
     }
 }

@@ -45,7 +45,7 @@ if (isset($msg)) {
                   </div>
                   <div class="form-group col-6">
                         <label>Descripción: *</label>
-                        <textarea name="txtDescripcion" id="txtDescripcion" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="txtDescripcion" id="txtDescripcion" cols="30" rows="10" class="form-control" value="{{ $producto->descripcion }}"></textarea>
                   </div>
             </div>
             <div class="row">
@@ -53,11 +53,11 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Precio: *</label>
-                        <input type="text" id="txtPrecio" name="txtPrecio" class="form-control" value="{{$producto->precio}}" required>
+                        <input type="text" id="txtPrecio" name="txtPrecio" class="form-control" value="{{ $producto->precio }}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Cantidad: *</label>
-                        <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" value="{{$producto->cantidad}}" required>
+                        <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" value="{{ $producto->cantidad }}" required>
                   </div>
             </div>
             <div class="row">
@@ -65,7 +65,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Imagen: *</label><br>
-                        <input type="file" id="txtImagen" name="txtImagen" class="form-control-image" value="{{$producto->imagen}}" >
+                        <input type="file" id="txtImagen" name="txtImagen" class="form-control-image" value="{{ $producto->imagen }}" >
                   </div>
                   <div class="form-group col-6">
                         <label>Categoria: *</label>
@@ -91,5 +91,24 @@ if (isset($msg)) {
                         return false;
                   }
             }
+            function eliminar() {
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('admin/producto/eliminar') }}",
+            data: { id:globalId },
+            async: true,
+            dataType: "json",
+            success: function (data) {
+                if (data.err = "0") {
+                    msgShow(data.mensaje, "success");
+                    $("#btnEnviar").hide();
+                    $("#btnEliminar").hide();
+                    $('#mdlEliminar').modal('toggle');
+                } else {
+                    msgShow(data.mensaje, "danger");
+                }
+            }
+        });
+    }
       </script>
       @endsection
