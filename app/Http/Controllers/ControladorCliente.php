@@ -18,7 +18,8 @@ class ControladorCliente extends Controller{
 			    $mensaje = "No tiene permisos para la operaci&oacute;n.";
 			    return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
 			} else {
-			    return view('sistema.cliente-listar', compact('titulo'));
+				$cliente= new Cliente();
+			    return view('sistema.cliente-nuevo', compact('titulo', 'cliente'));
 			}
 		  } else {
 			return redirect('admin/login');
@@ -111,7 +112,8 @@ class ControladorCliente extends Controller{
         );
         return json_encode($json_data);
     }
-    public function editar($idCliente){
+    public function editar($idCliente)
+    {
 	$titulo= "Editar cliente";
 	if (Usuario::autenticado() == true) {
 		if (!Patente::autorizarOperacion("CLIENTEEDITAR")) {
@@ -127,7 +129,8 @@ class ControladorCliente extends Controller{
 		return redirect('admin/login');
 	  }
     }
-    public function eliminar(Request $request){
+    public function eliminar(Request $request)
+    {
 	if (Usuario::autenticado() == true) {
 		if (!Patente::autorizarOperacion("CLIENTEELIMINAR")) {
 		      $resultado["err"] = EXIT_FAILURE;

@@ -1,5 +1,5 @@
 @extends('plantilla')
-@section('titulo', "$titulo")
+@section('titulo', "Nueva patente")
 @section('scripts')
 <script>
     globalId = '<?php echo isset($patente->idpatente) && $patente->idpatente > 0 ? $patente->idpatente : 0; ?>';
@@ -31,17 +31,11 @@
 @section('contenido')
 <?php
 if (isset($msg)) {
-    echo '<div id = "msg"></div>';
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
+<div id="msg"></div>
 <div class="panel-body">
-    <div id="msg"></div>
-    <?php
-    if (isset($msg)) {
-        echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
-    }
-    ?>
     <form id="form1" method="POST">
         <div class="row">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>

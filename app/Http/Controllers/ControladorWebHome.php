@@ -10,6 +10,6 @@ class ControladorWebHome extends Controller
 {
     public function index()
     {
-            return "";
+            return view("web.index");
     }
 }
