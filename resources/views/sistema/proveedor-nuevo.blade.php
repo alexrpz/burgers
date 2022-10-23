@@ -60,7 +60,11 @@ if (isset($msg)) {
                         <select name="lstRubro" id="lstRubro" class="form-control">
                               <option value="" selected disabled>Seleccionar</option>
                               @foreach($aRubros as $rubro)
+                              @if($rubro->idrubro == $proveedor->fk_idrubro )
+                                    <option selected value="{{$rubro->idrubro}}">"{{$rubro->nombre}}"</option>
+                                    @else
                                     <option value="{{$rubro->idrubro}}">"{{$rubro->nombre}}"</option>
+                                    @endif
                               @endforeach
                         </select>
                   </div>

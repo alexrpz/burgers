@@ -24,7 +24,7 @@ class Cliente extends Model
         $this->telefono = $request->input('txtTelefono');
         $this->correo = $request->input('txtCorreo');
         $this->dni = $request->input('txtDni');
-        $this->clave = $request->input('txtClave');
+        $this->clave = password_hash($request->input('txtClave'), PASSWORD_DEFAULT);
     }
 
     public function obtenerTodos()

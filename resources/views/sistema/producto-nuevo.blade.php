@@ -45,7 +45,7 @@ if (isset($msg)) {
                   </div>
                   <div class="form-group col-6">
                         <label>Descripción: *</label>
-                        <textarea name="txtDescripcion" id="txtDescripcion" cols="30" rows="10" class="form-control" value="{{ $producto->descripcion }}"></textarea>
+                        <textarea name="txtDescripcion" id="txtDescripcion" cols="30" rows="10" class="form-control">{{ $producto->descripcion }}</textarea>
                   </div>
             </div>
             <div class="row">
@@ -64,15 +64,19 @@ if (isset($msg)) {
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
-                        <label>Imagen: *</label><br>
-                        <input type="file" id="txtImagen" name="txtImagen" class="form-control-image" value="{{ $producto->imagen }}" >
+                        <label class="fileImagen">Imagen: *</label><br>
+                        <input type="file" id="archivo" name="archivo" class="form-control-file">
                   </div>
                   <div class="form-group col-6">
                         <label>Categoria: *</label>
                         <select name="lstCategoria" id="lstCategoria" class="form-control">
                               <option value=""disabled selected>Seleccionar</option>
                               @foreach($aCategorias as $categoria)
-                                    <option value="{{$categoria->idcategoria}}">{{$categoria->nombre}}</option>
+                              @if($categoria->idcategoria == $producto->fk_idcategoria)
+                                    <option selected  value="{{$categoria->idcategoria}}">{{$categoria->nombre}}</option>
+                                    @else
+                                          <option value="{{$categoria->idcategoria}}">{{$categoria->nombre}}</option>
+                                    @endif
                               @endforeach
                         </select>
                   </div>

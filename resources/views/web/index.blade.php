@@ -42,9 +42,9 @@
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <span>
-              Feane
+              Burgers SRL
             </span>
           </a>
 
@@ -144,14 +144,14 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Fast Food Restaurant
+                      Burgers SRL
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Las mejores hamburguesas de Argentina.
                     </p>
                     <div class="btn-box">
                       <a href="" class="btn1">
-                        Order Now
+                        Ordena ahora
                       </a>
                     </div>
                   </div>
@@ -165,14 +165,13 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Fast Food Restaurant
+                      Burgers SRL
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
-                    </p>
+                      Las mejores hamburguesas de Argentina.                    </p>
                     <div class="btn-box">
                       <a href="" class="btn1">
-                        Order Now
+                        Ordena ahora
                       </a>
                     </div>
                   </div>
@@ -186,14 +185,14 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Fast Food Restaurant
+                      Burgers SRL
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Las mejores hamburguesas de Argentina.  
                     </p>
                     <div class="btn-box">
                       <a href="" class="btn1">
-                        Order Now
+                        Ordena ahora
                       </a>
                     </div>
                   </div>
@@ -365,3 +364,127 @@
   </section>
 
   <!-- end offer section -->
+<!-- footer section -->
+@extends("web.plantilla")
+@section("contenido")
+<footer class="footer_section">
+    <div class="container">
+    <div class="pb-5 heading_container heading_center">
+      <h2>
+        Sucursales
+      </h2>
+    </div>
+      <div class="row">
+        <div class="col-md-3 footer-col">
+          <div class="footer_contact">
+            <h5>
+              
+            </h5>
+            <a href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Locación
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-3 footer-col">
+          <div class="footer_detail">
+            <h5>
+              Puerto Madero
+            </h5>
+            <p>
+            Dirección
+            </p>
+            <p>
+              Teléfono
+            </p>
+            <p>
+              Horario
+            </p>
+            <a href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Locación
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-3 footer-col center">
+          <h5>
+            Pilar
+          </h5>
+          <p>
+            Dirección
+          </p>
+          <p>
+            Teléfono
+          </p>
+          <p>
+            Horario
+          </p>
+          <a href="">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <span>
+              Locación
+            </span>
+          </a>
+        </div>
+        <div class="col-md-3 footer-col">
+            <h5>
+              Palermo
+            </h5>
+            <p>
+            Dirección
+            </p>
+            <p>
+              Teléfono
+            </p>
+            <p>
+              Horario
+            </p>
+            <a href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Locación
+              </span>
+            </a>
+          </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Free Html Templates</a><br><br>
+          &copy; <span id="displayYear"></span> Distributed By
+          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="web/js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="web/js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="web/js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>
+@endsection

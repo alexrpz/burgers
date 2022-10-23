@@ -56,7 +56,11 @@ if (isset($msg)) {
                         <select name="lstCliente" id="lstCliente" class="form-control" value="{{$pedido->fk_idcliente}}" required>
                               <option value="" disabled selected>Seleccionar</option>
                               @foreach($aClientes as $cliente)
-                                    <option value="{{ $cliente->idcliente }}">{{ $cliente->nombre }}</option>    
+                              @if($cliente->idcliente == $pedido->fk_idcliente)
+                                    <option selected value="{{ $cliente->idcliente }}">{{ $cliente->nombre }}</option> 
+                                    @else
+                                    <option value="{{ $cliente->idcliente }}">{{ $cliente->nombre }}</option> 
+                                    @endif
                               @endforeach
                         </select>
                   </div>
@@ -65,7 +69,11 @@ if (isset($msg)) {
                         <select name="lstEstado" id="lstEstado" class="form-control" value="{{$pedido->fk_idestado}}" required>
                               <option value="" disabled selected>Seleccionar</option>
                               @foreach($aEstados as $estado)
+                              @if($estado->idestado == $pedido->fk_idestado)
+                                    <option selected value="{{$estado->idestado}}">{{$estado->nombre}}</option>
+                                    @else
                                     <option value="{{$estado->idestado}}">{{$estado->nombre}}</option>
+                                    @endif
                               @endforeach
                         </select>
                   </div>
@@ -78,7 +86,11 @@ if (isset($msg)) {
                         <select name="lstSucursal" id="lstSucursal" class="form-control" value="{{$pedido->fk_idsucursal}}" required>
                         <option value="" disabled selected>Seleccionar</option>
                               @foreach($aSucursal as $sucursal)
+                                    @if($sucursal->idsucursal == $pedido->fk_idsucursal)
+                                    <option selected value="{{$sucursal->idsucursal}}">{{$sucursal->nombre}}</option>
+                                    @else
                                     <option value="{{$sucursal->idsucursal}}">{{$sucursal->nombre}}</option>
+                                    @endif
                               @endforeach
                         </select>
                   </div>
