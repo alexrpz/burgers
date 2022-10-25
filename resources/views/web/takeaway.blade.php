@@ -7,16 +7,16 @@
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
-          Our Menu
+          Menú
         </h2>
       </div>
 
       <ul class="filters_menu">
-        <li class="active" data-filter="*">All</li>
-        <li data-filter=".burger">Burger</li>
-        <li data-filter=".pizza">Pizza</li>
-        <li data-filter=".pasta">Pasta</li>
-        <li data-filter=".fries">Fries</li>
+        <li class="active" data-filter="*">Todos</li>
+        <li data-filter=".hamburguesas">Hamburguesas</li>
+        <li data-filter=".bebidas">Bebidas</li>
+        <li data-filter=".combos">Combos</li>
+        <li data-filter=".promociones">Promociones</li>
       </ul>
 
       <div class="filters-content">
@@ -481,7 +481,7 @@
             <div class="box">
               <div>
                 <div class="img-box">
-                  <img src="web/images//f7.png" alt="">
+                  <img src="web/images/f7.png" alt="">
                 </div>
                 <div class="detail-box">
                   <h5>
