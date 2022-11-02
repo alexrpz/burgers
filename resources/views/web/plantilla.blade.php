@@ -52,19 +52,18 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
-
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  mx-auto ">
-            <li class="nav-item active">
+            <li class="nav-item <?php echo (Request::path() == "/")? "active" : ""; ?>">
                 <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item <?php echo (Request::path() == "takeaway")? "active" : ""; ?>">
                 <a class="nav-link" href="/takeaway">Takeaway</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item <?php echo (Request::path() == "nosotros")? "active" : ""; ?>">
                 <a class="nav-link" href="/nosotros">Nosotros</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item <?php echo (Request::path() == "contacto")? "active" : ""; ?>">
                 <a class="nav-link" href="/contacto">Contacto</a>
               </li>
             </ul>
@@ -136,11 +135,10 @@
     </header>
     <!-- end header section -->
     @yield("banner")
-  </div>
-
-
+    </div>
 @yield("contenido")
 
+  
 
 
   <!-- footer section -->
@@ -150,11 +148,10 @@
         Sucursales
       </h2>
       <div class="row">
+        @foreach($aSucursal as $sucursal) 
         <div class="col-md-3 footer-col">
           <div class="footer_contact">
             <div class="contact_link_box">
-              @foreach($aSucursal as $sucursal) 
-                @if($sucursal == $aSucursal[0])
                   <h4>{{ $sucursal->nombre }}</h4>
                   <div>
                     <p class="bi bi-telephone"> {{ $sucursal->telefono }}</p>
@@ -162,62 +159,10 @@
                   <p class="bi bi-geo"> {{ $sucursal->direccion }}</p>
                   <p class="bi bi-clock"> {{ $sucursal->horario }}</p>
                   <a class="bi bi-geo-alt" href="{{ $sucursal->link }}"> Ubicación</a>
-                @endif
-              @endforeach
             </div>
           </div>
         </div>
-        <div class="col-md-3 footer-col">
-          <div class="footer_contact">
-            <div class="contact_link_box">
-              @foreach($aSucursal as $sucursal) 
-                @if($sucursal == $aSucursal[1])
-                  <h4>{{ $sucursal->nombre }}</h4>
-                  <div>
-                    <p class="bi bi-telephone"> {{ $sucursal->telefono }}</p>
-                  </div>
-                  <p class="bi bi-geo"> {{ $sucursal->direccion }}</p>
-                  <p class="bi bi-clock"> {{ $sucursal->horario }}</p>
-                  <a class="bi bi-geo-alt" href="{{ $sucursal->link }}"> Ubicación</a>
-                @endif
-              @endforeach
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 footer-col">
-          <div class="footer_contact">
-            <div class="contact_link_box">
-              @foreach($aSucursal as $sucursal) 
-                @if($sucursal == $aSucursal[2])
-                  <h4>{{ $sucursal->nombre }}</h4>
-                  <div>
-                    <p class="bi bi-telephone"> {{ $sucursal->telefono }}</p>
-                  </div>
-                  <p class="bi bi-geo"> {{ $sucursal->direccion }}</p>
-                  <p class="bi bi-clock"> {{ $sucursal->horario }}</p>
-                  <a class="bi bi-geo-alt" href="{{ $sucursal->link }}"> Ubicación</a>
-                @endif
-              @endforeach
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 footer-col">
-          <div class="footer_contact">
-            <div class="contact_link_box">
-              @foreach($aSucursal as $sucursal) 
-                @if($sucursal == $aSucursal[3])
-                  <h4>{{ $sucursal->nombre }}</h4>
-                  <div>
-                    <p class="bi bi-telephone"> {{ $sucursal->telefono }}</p>
-                  </div>
-                  <p class="bi bi-geo"> {{ $sucursal->direccion }}</p>
-                  <p class="bi bi-clock"> {{ $sucursal->horario }}</p>
-                  <a class="bi bi-geo-alt" href="{{ $sucursal->link }}"> Ubicación</a>
-                @endif
-              @endforeach
-            </div>
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
   </footer>

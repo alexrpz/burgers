@@ -31,14 +31,18 @@ class Producto extends Model
     public function obtenerTodos()
     {
         $sql = "SELECT
-				idproducto,
-				nombre,
-				descripcion,
-				precio,
-				cantidad, 
-				imagen, 
-				fk_idcategoria              
-                FROM productos A ORDER BY nombre ASC";
+				A.idproducto,
+				A.nombre,
+				A.descripcion,
+				A.precio,
+				A.cantidad, 
+				A.imagen, 
+				A.fk_idcategoria,
+                B.nombre AS categoria              
+                FROM productos A
+                INNER JOIN categorias B ON A.fk_idcategoria = B.idcategoria
+                WHERE 1=1
+                ";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
