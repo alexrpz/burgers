@@ -5,47 +5,29 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Book A Table
+          Contacto
         </h2>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="">
+            <form method="POST" action="">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
               <div>
-                <input type="text" class="form-control" placeholder="Your Name" />
+                <input type="text" class="form-control" placeholder="Nombre completo" />
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Phone Number" />
+                <input type="text" class="form-control" placeholder="Teléfono" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Your Email" />
+                <input type="email" class="form-control" placeholder="Correo electrónico" />
               </div>
               <div>
-                <select class="form-control nice-select wide">
-                  <option value="" disabled selected>
-                    How many persons?
-                  </option>
-                  <option value="">
-                    2
-                  </option>
-                  <option value="">
-                    3
-                  </option>
-                  <option value="">
-                    4
-                  </option>
-                  <option value="">
-                    5
-                  </option>
-                </select>
-              </div>
-              <div>
-                <input type="date" class="form-control">
+                <textarea placeholder="Mensaje" name="txtMensaje" id="txtMensaje" class="form-control" cols="12" rows="10" ></textarea>
               </div>
               <div class="btn_box">
                 <button>
-                  Book Now
+                  ENVIAR
                 </button>
               </div>
             </form>

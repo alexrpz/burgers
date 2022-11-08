@@ -31,7 +31,8 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: 'Dancing Script', cursive;
 }
 
@@ -611,6 +612,21 @@ a:focus {
 }
 
 .food_section .btn-box a:hover {
+  background-color: #e69c00;
+}
+
+.btn-box1 button {
+  display: inline-block;
+  padding: 10px 55px;
+  background-color: #ffbe33;
+  color: #ffffff;
+  border-radius: 45px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-box1 button:hover {
   background-color: #e69c00;
 }
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -34,7 +33,6 @@
 </head>
 
 <body class="sub_page">
-
   <div class="hero_area">
     <div class="bg-box">
       <img src="web/images/hero-bg.jpg" alt="">
@@ -54,24 +52,24 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  mx-auto ">
-            <li class="nav-item <?php echo (Request::path() == "/")? "active" : ""; ?>">
+              <li class="nav-item <?php echo (Request::path() == "/") ? "active" : ""; ?>">
                 <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item <?php echo (Request::path() == "takeaway")? "active" : ""; ?>">
+              <li class="nav-item <?php echo (Request::path() == "takeaway") ? "active" : ""; ?>">
                 <a class="nav-link" href="/takeaway">Takeaway</a>
               </li>
-              <li class="nav-item <?php echo (Request::path() == "nosotros")? "active" : ""; ?>">
+              <li class="nav-item <?php echo (Request::path() == "nosotros") ? "active" : ""; ?>">
                 <a class="nav-link" href="/nosotros">Nosotros</a>
               </li>
-              <li class="nav-item <?php echo (Request::path() == "contacto")? "active" : ""; ?>">
+              <li class="nav-item <?php echo (Request::path() == "contacto") ? "active" : ""; ?>">
                 <a class="nav-link" href="/contacto">Contacto</a>
               </li>
             </ul>
             <div class="user_option">
-              <a href="" class="user_link">
-                <i class="/mi-cuenta" aria-hidden="true"></i>
+              <a href="/mi-cuenta" class="user_link">
+                <i class="fa fa-user" aria-hidden="true"></i>
               </a>
-              <a class="/carrito" href="#">
+              <a class="cart_link" href="#">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                   <g>
                     <g>
@@ -135,10 +133,12 @@
     </header>
     <!-- end header section -->
     @yield("banner")
-    </div>
-@yield("contenido")
+  </div>
 
-  
+
+
+  @yield("contenido")
+
 
 
   <!-- footer section -->
@@ -148,17 +148,17 @@
         Sucursales
       </h2>
       <div class="row">
-        @foreach($aSucursal as $sucursal) 
+        @foreach($aSucursal as $sucursal)
         <div class="col-md-3 footer-col">
           <div class="footer_contact">
             <div class="contact_link_box">
-                  <h4>{{ $sucursal->nombre }}</h4>
-                  <div>
-                    <p class="bi bi-telephone"> {{ $sucursal->telefono }}</p>
-                  </div>
-                  <p class="bi bi-geo"> {{ $sucursal->direccion }}</p>
-                  <p class="bi bi-clock"> {{ $sucursal->horario }}</p>
-                  <a class="bi bi-geo-alt" href="{{ $sucursal->link }}"> Ubicación</a>
+              <h4>{{ $sucursal->nombre }}</h4>
+              <div>
+                <p class="bi bi-telephone"> {{ $sucursal->telefono }}</p>
+              </div>
+              <p class="bi bi-geo"> {{ $sucursal->direccion }}</p>
+              <p class="bi bi-clock"> {{ $sucursal->horario }}</p>
+              <a class="bi bi-geo-alt" href="{{ $sucursal->link }}"> Ubicación</a>
             </div>
           </div>
         </div>
@@ -167,5 +167,26 @@
     </div>
   </footer>
   <!-- footer section -->
+  <!-- jQery -->
+  <script src="web/js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="web/js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="web/js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+</body>
 
-  
+</html>

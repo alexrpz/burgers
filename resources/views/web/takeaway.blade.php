@@ -16,9 +16,10 @@
       <li data-filter=".{{ $categoria->nombre }}">{{ $categoria->nombre }}</li>
       @endforeach
     </ul>
-    <div class="filters-content">
+    <div class="filters-content width-0">
       <div class="row grid">
         @foreach($aProductos AS $producto)
+        <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
         <div class="col-sm-6 col-lg-4 all {{ $producto->categoria }}">
           <div class="box ">
             <div>
@@ -36,6 +37,7 @@
                   <h6>
                     ${{ $producto->precio, 2,'.' }}
                   </h6>
+                  <input style="width : 110px; heigth : 110px" placeholder="Cantidad" type="number" name="txtCantidad" id="txtCantidad" class="form-control">
                   <a href="/carrito">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                       <g>

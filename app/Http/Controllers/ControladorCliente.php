@@ -49,7 +49,7 @@ class ControladorCliente extends Controller{
 				$entidad->cargarDesdeRequest($request);
 	
 				//validaciones
-				if ($entidad->nombre == "" || $entidad->dni== "" || $entidad->telefono == "" || $entidad->correo == "" || $entidad->clave == "") {
+				if ($entidad->nombre == "" || $entidad->apellido== "" || $entidad->dni== "" || $entidad->telefono == "" || $entidad->correo == "" || $entidad->clave == "") {
 					$msg["ESTADO"] = MSG_ERROR;
 					$msg["MSG"] = "Complete todos los datos";
 				} else {
@@ -96,6 +96,7 @@ class ControladorCliente extends Controller{
         for ($i = $inicio; $i < count($aClientes) && $cont < $registros_por_pagina; $i++) {
             $row = array();
 		$row[] = "<a href='/admin/cliente/" . $aClientes[$i]->idcliente . "'>" . $aClientes[$i]->nombre . "</a>";
+		$row[] = $aClientes[$i]->apellido;
 		$row[] = $aClientes[$i]->dni;
 		$row[] = $aClientes[$i]->correo;
 		$row[] = $aClientes[$i]->telefono;

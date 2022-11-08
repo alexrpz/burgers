@@ -1,7 +1,6 @@
 @extends("web.plantilla")
 @section("contenido")
   <!-- about section -->
-
   <section class="about_section layout_padding">
     <div class="container  ">
 
@@ -15,28 +14,25 @@
           <div class="detail-box">
             <div class="heading_container">
               <h2>
-                We Are Feane
+                Nosotros
               </h2>
+              <h5>
+                Somos familia
+              </h5>
             </div>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
+            Somos más que una hamburguesería, somos mucho más que un local donde comer comida rápida. Somos Burgers SRL, y si estás preparado para comerte las hamburguesas más espectaculares de la zona, tienes que visitarnos.
+            Un negocio de familia con un sueño de llegar a lo más alto.
             </p>
-            <a href="">
-              Read More
-            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
-
   <!-- end about section -->
-<!-- client section -->
+  <!-- client section -->
 
-<section class="client_section layout_padding-bottom">
+  <section class="client_section layout_padding-bottom">
     <div class="container">
       <div class="heading_container heading_center psudo_white_primary mb_45">
         <h2>
@@ -87,4 +83,39 @@
   </section>
 
   <!-- end client section -->
+<!-- postulacion section -->
+<div class="container">
+  <div class="heading_container heading_center psudo_white_primary mb_45">
+    <h2>Trabajá con nosotros</h2>
+  </div>
+  <form action="" method="POST">
+  <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+    <div class="row py-3">
+      <div class="col-6">
+        <input placeholder="Nombre" type="text" name="txtNombre" id="txtNombre" class="form-control" required>
+      </div>
+      <div class="col-6">
+        <input placeholder="Apellido" type="text" name="txtApellido" id="txtApellido" class="form-control" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <input placeholder="Teléfono" type="text" name="txtTelefono" id="txtTelefono" class="form-control" required>
+      </div>
+      <div class="col-6">
+        <input placeholder="Correo electrónico" type="text" name="txtCorreo" id="txtCorreo" class="form-control" required>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-6">
+        <label for="txtArchivo">Curriculum vitae:</label>
+        <input type="file" name="archivo" id="archivo" class="form-control-file" required>
+      </div>
+    </div>
+    <div class="btn_box heading_container heading_center pb-4">
+      <button type="submit" class="btn btn-dark">ENVIAR</button>
+    </div>
+  </form>
+</div>
+<!-- end postulacion section -->
   @endsection

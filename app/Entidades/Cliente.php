@@ -12,7 +12,7 @@ class Cliente extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'idcliente', 'nombre', 'telefono', 'correo', 'dni', 'clave',
+        'idcliente', 'nombre', 'apellido', 'telefono', 'correo', 'dni', 'clave',
     ];
 
     protected $hidden = [];
@@ -21,6 +21,7 @@ class Cliente extends Model
     {
         $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
         $this->nombre = $request->input('txtNombre');
+        $this->apellido = $request->input('txtApellido');
         $this->telefono = $request->input('txtTelefono');
         $this->correo = $request->input('txtCorreo');
         $this->dni = $request->input('txtDni');
@@ -32,6 +33,7 @@ class Cliente extends Model
         $sql = "SELECT
 				idcliente,
 				nombre,
+                apellido,
 				telefono,
 				correo, 
 				dni, 
@@ -45,6 +47,7 @@ class Cliente extends Model
         $sql = "SELECT
                 idcliente,
 				nombre,
+                apellido,
 				telefono,
 				correo, 
 				dni, 
@@ -56,6 +59,7 @@ class Cliente extends Model
         if (count($lstRetorno) > 0) {
             $this->idcliente = $lstRetorno[0]->idcliente;
             $this->nombre = $lstRetorno[0]->nombre;
+            $this->apellido = $lstRetorno[0]->apellido;
             $this->telefono = $lstRetorno[0]->telefono;
             $this->correo = $lstRetorno[0]->correo;
             $this->dni = $lstRetorno[0]->dni;
@@ -69,6 +73,7 @@ class Cliente extends Model
     {
         $sql = "UPDATE clientes SET
             nombre='$this->nombre',
+            apellido='$this->apellido',
             telefono='$this->telefono',
             correo='$this->correo',
             dni= '$this->dni',
@@ -88,13 +93,15 @@ class Cliente extends Model
     {
         $sql = "INSERT INTO clientes (
                 nombre,
+                apellido,
                 telefono,
                 correo,
                 dni,
                 clave
-            ) VALUES (?, ?, ?, ?, ?);";
+            ) VALUES (?, ?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
             $this->nombre,
+            $this->apellido,
             $this->telefono,
             $this->correo,
             $this->dni,
@@ -107,14 +114,16 @@ class Cliente extends Model
         $request = $_REQUEST;
         $columns = array(
             0 => 'nombre',
-            1 => 'telefono',
-            2 => 'correo',
-            3 => 'dni',
-            4 => 'clave',
+            1 => 'apellido',
+            2 => 'telefono',
+            3 => 'correo',
+            4 => 'dni',
+            5 => 'clave',
         );
         $sql = "SELECT DISTINCT
                     idcliente,
                     nombre,
+                    apellido,
                     telefono,
                     correo,
                     dni,
@@ -126,9 +135,10 @@ class Cliente extends Model
         //Realiza el filtrado
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR apellido LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR correo LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR dni LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR dni LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR telefono LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR clave LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
