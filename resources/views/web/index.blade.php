@@ -16,7 +16,7 @@
                       Las mejores hamburguesas de Buenos Aires.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="/registrarse" class="btn1">
                         Crear cuenta
                       </a>
                     </div>
@@ -37,7 +37,7 @@
                       No te olvidarás de este sabor.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="/registrarse" class="btn1">
                         Crear cuenta
                       </a>
                     </div>
@@ -58,7 +58,7 @@
                       Danos una oportunidad de cambiar tu lugar preferido.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="/registrarse" class="btn1">
                         Crear cuenta
                       </a>
                     </div>

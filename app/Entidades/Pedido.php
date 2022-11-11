@@ -132,9 +132,9 @@ class Pedido extends Model{
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( idpedido LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR total LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR fecha LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR fk_idcliente LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR fk_idestado LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR fecha LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR fk_idcliente LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR fk_idestado LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR fk_idsucursal LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];

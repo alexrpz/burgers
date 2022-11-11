@@ -109,7 +109,8 @@
     <div class="row py-3">
       <div class="col-6">
         <label for="txtArchivo">Curriculum vitae:</label>
-        <input type="file" name="archivo" id="archivo" class="form-control-file" required>
+        <input type="file" name="archivo" id="archivo" class="form-control-file" accept=".doc, .docx, .pdf" required>
+        <small class="d-block">Archivos admitidos: .doc, .docx, .pdf</small>
       </div>
     </div>
     <div class="btn_box heading_container heading_center pb-4">

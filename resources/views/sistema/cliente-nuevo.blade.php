@@ -53,7 +53,7 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Correo: *</label>
-                        <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" value="{{$cliente->correo}}" required>
+                        <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="{{$cliente->correo}}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>DNI: *</label>
@@ -65,11 +65,11 @@ if (isset($msg)) {
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-6">
                         <label>Teléfono: *</label>
-                        <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" value="{{ $cliente->telefono }}" required>
+                        <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="{{ $cliente->telefono }}" required>
                   </div>
                   <div class="form-group col-6">
                         <label>Clave: *</label>
-                        <input type="text" id="txtClave" name="txtClave" class="form-control" value="" required>
+                        <input type="password" id="txtClave" name="txtClave" class="form-control" value="" required>
                   </div>
             </div>
       </form>
